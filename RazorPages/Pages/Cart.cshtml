@@ -1,0 +1,105 @@
+@page
+@model RazorPages.Pages.Cart
+
+@{
+    Layout = "Shared/_Layout";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Cart</title>
+    <link href="css/cart.css" rel="stylesheet" />
+</head>
+<body>
+<div class="container px-3 my-5 clearfix">
+    <!-- Shopping cart table -->
+    <div class="card">
+        <div class="card-header">
+            <h2>Shopping Cart</h2>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                @if(Model.SessionList == null || Model.SessionList.Count == 0)
+                {
+                <div class=" h-75 p-3 mt-3 mb-3 text-center">
+                    <p class="mb-0">Empty !</p>
+                </div>
+                }
+                @if (Model.SessionList != null && Model.SessionList.Count != 0)
+                {
+                    <table class="table table-bordered m-0">
+                        <thead>
+                        <tr>
+                            <!-- Set columns width -->
+                            <th class="text-center py-3 px-4" style="min-width: 400px;">Product Name &amp; Details</th>
+                            <th class="text-right py-3 px-4" style="width: 100px;">Price</th>
+                            <th class="text-center py-3 px-4" style="width: 120px;">Quantity</th>
+                            <th class="text-right py-3 px-4" style="width: 100px;">Total</th>
+                            <th class="text-center align-middle py-3 px-0" style="width: 40px;"><a href="#" class="shop-tooltip float-none text-light" title="" data-original-title="Clear cart"><i class="ino ion-md-trash"></i></a></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach (var item in Model.SessionList)
+                        {
+                            <tr>
+                                <td class="p-4">
+                                    <div class="media align-items-center">
+                                        <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="d-block ui-w-40 ui-bordered mr-4" alt="">
+                                        <div class="media-body">
+                                            <a href="#" class="d-block text-dark">@(Model.CartListModel?.First(x => x.productID.Equals(@item.ProductId)).productName)</a>
+                                            <small>
+                                                <span class="text-muted">Description:</span>
+                                                @(Model.CartListModel?.First(x => x.productID.Equals(@item.ProductId)).productDescription)
+                                            </small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="text-right font-weight-semibold align-middle p-4">@(Model.CartListModel?.First(x => x.productID.Equals(@item.ProductId)).price)</td>
+                                <td class="align-middle p-4"><input asp-for="@item.Quantity" type="text" class="form-control text-center" value=@item.Quantity></td>
+                                <td class="text-right font-weight-semibold align-middle p-4">@(Model.CartListModel?.First(x => x.productID.Equals(@item.ProductId)).price * @item.Quantity)</td>
+                                <td class="text-center align-middle">
+                                    <div>
+                                        <form method="post" id="formRemove" asp-page-handler="RemoveProduct">
+                                            <input type="hidden" name="ProductId" value="@item.ProductId"/>
+                                            <button type="submit" class="shop-tooltip close float-none text-danger" title="Remove" data-original-title="Remove">×</button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                }
+            </div>
+            <!-- / Shopping cart table -->
+            @if (Model.SessionList != null && Model.SessionList.Count != 0)
+            {
+                <div class="d-flex flex-wrap justify-content-between align-items-center pb-4">
+                    <div class="mt-4">
+                        <label class="text-muted font-weight-normal">Promocode</label>
+                        <input type="text" placeholder="ABC" class="form-control">
+                    </div>
+                    <div class="d-flex">
+                        <div class="text-right mt-4 mr-5">
+                            <label class="text-muted font-weight-normal m-0">Discount</label>
+                            <div class="text-large"><strong>$20</strong></div>
+                        </div>
+                        <div class="text-right mt-4">
+                            <label class="text-muted font-weight-normal m-0">Total price</label>
+                            <div class="text-large"><strong>@Model.Total</strong></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="float-right">
+                    <a asp-page="./Menu" type="button" class="btn btn-lg btn-default md-btn-flat mt-2 mr-3">Back to shopping</a>
+                    <button type="button" class="btn btn-lg btn-primary mt-2">Checkout</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+</body>
+</html>
