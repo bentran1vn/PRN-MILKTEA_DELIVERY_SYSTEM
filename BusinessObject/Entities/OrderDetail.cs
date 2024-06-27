@@ -11,6 +11,7 @@ namespace BusinessObject.Entities
     public class OrderDetail
     {
         [Key]
+        public Guid Id { get; set; } = Guid.NewGuid();
         public required string orderID {  get; set; }
         public required string productID {  get; set; }
         public required int quantity { get; set; }   

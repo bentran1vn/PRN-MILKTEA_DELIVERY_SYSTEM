@@ -1,6 +1,7 @@
 using BusinessObject;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
+using Repositories.FeedBacks;
 using Repositories.Order;
 using Repositories.OrderDetail;
 using Repositories.Products;
@@ -25,6 +26,7 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IOrderDetailsRepository, OrderDetailsRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IFeedBackRepository, FeedBackRepository>();
 var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

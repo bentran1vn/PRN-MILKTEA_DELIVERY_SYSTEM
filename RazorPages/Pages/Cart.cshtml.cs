@@ -51,7 +51,7 @@ public class Cart : PageModel
         if (SessionList == null) return result;
         foreach (var item in SessionList)
         {
-            result += CartListModel.FirstOrDefault(x => x.productID.Equals(item.ProductId))!.price * item.Quantity;
+            result += CartListModel.FirstOrDefault(x => x.ProductID.Equals(item.ProductId))!.Price * item.Quantity;
         }
         return result;
     }

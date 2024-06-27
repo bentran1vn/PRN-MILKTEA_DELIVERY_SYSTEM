@@ -14,7 +14,7 @@ public class ProductDAO
 
     public void Delete(string productId)
     {
-        var product = _context.Products.FirstOrDefault(x => x.productID == productId);
+        var product = _context.Products.FirstOrDefault(x => x.ProductID == productId);
         if (product == null) throw new Exception("Can not find Entity");
         _context.Products.Remove(product);
         _context.SaveChanges();
@@ -34,6 +34,6 @@ public class ProductDAO
 
     public Product? FindProductById(string productId)
     {
-        return _context.Products.AsNoTracking().FirstOrDefault(x => x.productID.Equals(productId));
+        return _context.Products.AsNoTracking().FirstOrDefault(x => x.ProductID.Equals(productId));
     }
 }
