@@ -23,16 +23,16 @@
         <div class="row gx-4 gx-lg-5 align-items-center">
             <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" style="height: 600px; width: 500px" src="images/1milte.jpeg" alt="..." /></div>
             <form method="post" class="col-md-6">
-                <h1 class="display-5 fw-bolder">@Model.ProductModel.productName</h1>
+                <h1 class="display-5 fw-bolder">@Model.ProductModel.ProductName</h1>
                 <div class="fs-5 mb-5">
-                    <span class="text-decoration-line-through">@(@Model.ProductModel.price * 1.3)</span>
-                    <span>$@Model.ProductModel.price</span>
+                    <span class="text-decoration-line-through">@(@Model.ProductModel.Price * 1.3)</span>
+                    <span>$@Model.ProductModel.Price</span>
                 </div>
-                <p class="lead">@Model.ProductModel.productDescription</p>
+                <p class="lead">@Model.ProductModel.ProductDescription</p>
                 <div class="d-flex">
                     <input asp-for="ProductCartInput.ProductId" type="hidden"/>
                     <input asp-for="ProductCartInput.Quantity" class="form-control text-center me-3" id="inputQuantity"
-                           type="number" data-max-quantity="@Model.ProductModel.quantity" />
+                           type="number" data-max-quantity="@Model.ProductModel.Quantity" />
                     <button class="btn btn-outline-dark flex-shrink-0" type="submit">
                         <i class="bi-cart-fill me-1"></i>
                         Add to cart
@@ -42,9 +42,40 @@
         </div>
     </div>
 </section>
-<!-- Related items section-->
 <section class="py-5 bg-light">
     <div class="container px-4 px-lg-5 mt-5">
+        <h2 class="fw-bolder mb-4 text-center">Product Feedbacks</h2>
+        @foreach (var item in Model.FeedbackItems)
+        {
+        <div class="feedback-item mb-4 p-4 bg-white rounded shadow-sm">
+            <div class="feedback-header d-flex justify-content-between align-items-center mb-2">
+                <div class="feedback-user d-flex align-items-center">
+                    <img src="https://via.placeholder.com/50" alt="User Avatar" class="rounded-circle me-3">
+                    <div>
+                        <strong>@item.User.userName</strong>
+                        <div class="text-muted">@item.create_At.ToString()</div>
+                    </div>
+                </div>
+                <div class="feedback-rating">
+                    @for (var i = 0; i < @item.point; i++)
+                    {
+                    <i class="bi bi-star-fill text-warning"></i>
+                    }
+                    @for (var i = @item.point; i < 5; i++)
+                    {
+                    <i class="bi bi-star text-warning"></i>
+                    }
+                </div>
+            </div>
+            <p class="feedback-content mb-0">@item.content</p>
+        </div>
+        }
+    </div>
+</section>
+
+<!-- Related items section-->
+<section class="py-5 bg-light">
+    <div class="container px-4 px-lg-5 mt-2">
         <h2 class="fw-bolder mb-4">Related products</h2>
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
             @foreach (var item in Model.ProductList4)
@@ -59,15 +90,15 @@
                         <div class="card-body p-4">
                             <div class="text-center">
                                 <!-- Product name-->
-                                <h5 class="fw-bolder">@item.productName</h5>
+                                <h5 class="fw-bolder">@item.ProductName</h5>
                                 <!-- Product price-->
-                                <span class="text-muted text-decoration-line-through">@(item.price * 1.3)</span>
-                                @item.price
+                                <span class="text-muted text-decoration-line-through">@(item.Price * 1.3)</span>
+                                @item.Price
                             </div>
                         </div>
                         <!-- Product actions-->
                         <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" asp-page="./Detaill" asp-route-id="@item.productID">Add to cart</a></div>
+                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" asp-page="./Detaill" asp-route-id="@item.ProductID">Add to cart</a></div>
                         </div>
                     </div>
                 </div>

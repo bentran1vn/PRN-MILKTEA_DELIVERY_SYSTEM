@@ -3,6 +3,7 @@ using BusinessObject.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using RazorPages.Utils;
+using Repositories.FeedBacks;
 using Repositories.Products;
 
 namespace RazorPages.Pages;
@@ -11,11 +12,13 @@ public class Detaill : PageModel
 {
     private readonly IProductRepository _productRepository;
     private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly IFeedBackRepository _feedBackRepository;
 
-    public Detaill(IProductRepository productRepository, IHttpContextAccessor httpContextAccessor)
+    public Detaill(IProductRepository productRepository, IHttpContextAccessor httpContextAccessor,IFeedBackRepository feedBackRepository)
     {
         _productRepository = productRepository;
         _httpContextAccessor = httpContextAccessor;
+        _feedBackRepository = feedBackRepository;
     }
     
     [BindProperty] 
@@ -26,18 +29,24 @@ public class Detaill : PageModel
     
     [BindProperty] 
     public IList<Product> ProductList4 { set; get; }
+    
+    [BindProperty] 
+    public IList<FeedBack> FeedbackItems { set; get; }
+    
 
     public IActionResult OnGet(string? id)
     {
         if (id == null) RedirectToPage("./Index");
         var result = _productRepository.GetProductById(id!);
         var result4 = _productRepository.GetAll4(id!).ToList();
+        var resultFeed = _feedBackRepository.GetAllFeedBackByProductId(id!).ToList();
         if(result == null) RedirectToPage("./Index");
         ProductModel = result!;
         ProductList4 = result4;
+        FeedbackItems = resultFeed;
         ProductCartInput = new ProductCartModel()
         {
-            ProductId = result!.productID
+            ProductId = result!.ProductID
         };
         return Page();
     }

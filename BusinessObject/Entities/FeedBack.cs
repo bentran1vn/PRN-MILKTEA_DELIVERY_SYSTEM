@@ -15,7 +15,7 @@ namespace BusinessObject.Entities
         public string content { get; set; }
         public required string userID { get; set; }
         public int point { get; set; }
-        public string productID { get; set; }
+        public Guid OrderDetailId { get; set; }
         public string? create_By { get; set; }
         public string? update_By { get; set; }
         public string? delete_By { get; set; }
@@ -23,7 +23,11 @@ namespace BusinessObject.Entities
         public DateTime? update_At { get; set; }
         public DateTime? delete_At { get; set; }
         public required bool status {  get; set; }
-        [ForeignKey(nameof(productID))]
-        public virtual OrderDetail Products { get; set; }
+        
+        [ForeignKey(nameof(userID))]
+        public virtual User User { get; set; }
+        
+        [ForeignKey(nameof(OrderDetailId))]
+        public virtual OrderDetail OrderDetail { get; set; }
     }
 }

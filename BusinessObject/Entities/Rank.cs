@@ -19,6 +19,8 @@ namespace BusinessObject.Entities
         public DateTime? create_At { get; set; }
         public DateTime? update_At { get; set; }
         public DateTime? delete_At { get; set; }
+        
+        public virtual ICollection<User> Users { get; set; } = new List<User>();
 
     }
 }

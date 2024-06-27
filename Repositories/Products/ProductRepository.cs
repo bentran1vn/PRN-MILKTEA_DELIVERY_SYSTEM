@@ -8,6 +8,12 @@ public class ProductRepository: IProductRepository
 {
     private readonly ProductDAO _dao = new();
 
+    public IEnumerable<Product> GetAll(int pageNum, int pageSize)
+    {
+        var result = _dao.GetAll();
+        return result.Skip((pageNum-1) * pageSize).Take(pageSize);
+    }
+
     public IEnumerable<Product> GetAll()
     {
         return _dao.GetAll();
@@ -37,7 +43,7 @@ public class ProductRepository: IProductRepository
     {
         Random random = new Random();
         return _dao.GetAll()
-            .Where(x => !x.productID.Equals(productId))
+            .Where(x => !x.ProductID.Equals(productId))
             .OrderBy(_ => random.Next())
             .Take(4);
     }
@@ -52,6 +58,11 @@ public class ProductRepository: IProductRepository
 
     public IEnumerable<Product> GetAllFormSession(List<string> productIds)
     {
-        return _dao.GetAll().Where(x => productIds.Contains(x.productID));
+        return _dao.GetAll().Where(x => productIds.Contains(x.ProductID));
+    }
+
+    public int GetCount()
+    {
+        return _dao.GetAll().Count();
     }
 }

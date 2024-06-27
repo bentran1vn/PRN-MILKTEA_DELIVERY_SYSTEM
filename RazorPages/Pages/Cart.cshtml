@@ -48,17 +48,17 @@
                                     <div class="media align-items-center">
                                         <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="d-block ui-w-40 ui-bordered mr-4" alt="">
                                         <div class="media-body">
-                                            <a href="#" class="d-block text-dark">@(Model.CartListModel?.First(x => x.productID.Equals(@item.ProductId)).productName)</a>
+                                            <a href="#" class="d-block text-dark">@(Model.CartListModel?.First(x => x.ProductID.Equals(@item.ProductId)).ProductName)</a>
                                             <small>
                                                 <span class="text-muted">Description:</span>
-                                                @(Model.CartListModel?.First(x => x.productID.Equals(@item.ProductId)).productDescription)
+                                                @(Model.CartListModel?.First(x => x.ProductID.Equals(@item.ProductId)).ProductDescription)
                                             </small>
                                         </div>
                                     </div>
                                 </td>
-                                <td class="text-right font-weight-semibold align-middle p-4">@(Model.CartListModel?.First(x => x.productID.Equals(@item.ProductId)).price)</td>
+                                <td class="text-right font-weight-semibold align-middle p-4">@(Model.CartListModel?.First(x => x.ProductID.Equals(@item.ProductId)).Price)</td>
                                 <td class="align-middle p-4"><input asp-for="@item.Quantity" type="text" class="form-control text-center" value=@item.Quantity></td>
-                                <td class="text-right font-weight-semibold align-middle p-4">@(Model.CartListModel?.First(x => x.productID.Equals(@item.ProductId)).price * @item.Quantity)</td>
+                                <td class="text-right font-weight-semibold align-middle p-4">@(Model.CartListModel?.First(x => x.ProductID.Equals(@item.ProductId)).Price * @item.Quantity)</td>
                                 <td class="text-center align-middle">
                                     <div>
                                         <form method="post" id="formRemove" asp-page-handler="RemoveProduct">
