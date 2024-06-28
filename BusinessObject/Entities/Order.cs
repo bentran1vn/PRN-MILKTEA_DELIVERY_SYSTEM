@@ -11,7 +11,7 @@ namespace BusinessObject.Entities
     public class Order
     {
         [Key]
-        public string orderID { get; set; }
+        public Guid orderID { get; set; }
         public required string userID {  get; set; }
         public string shipperID {  get; set; }
         public string note {  get; set; }

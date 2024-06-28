@@ -95,7 +95,9 @@
 
                 <div class="float-right">
                     <a asp-page="./Menu" type="button" class="btn btn-lg btn-default md-btn-flat mt-2 mr-3">Back to shopping</a>
-                    <button type="button" class="btn btn-lg btn-primary mt-2">Checkout</button>
+                    <form method="post" id="formCheckout" asp-page-handler="CheckOut">
+                        <button type="submit" class="btn btn-lg btn-primary mt-2">Checkout</button>
+                    </form>
                 </div>
             }
         </div>

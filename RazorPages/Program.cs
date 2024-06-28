@@ -2,9 +2,10 @@ using BusinessObject;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using Repositories.FeedBacks;
-using Repositories.Order;
-using Repositories.OrderDetail;
+using Repositories.Orders;
+using Repositories.OrderDetails;
 using Repositories.Products;
+using Repositories.SignalR;
 
 var builder = WebApplication.CreateBuilder(args);
 var cookiePolicyOptions = new CookiePolicyOptions
@@ -23,8 +24,15 @@ builder.Services.AddRazorPages();
 builder.Services.AddDbContext<MilkTeaDeliveryDBContext>();
 builder.Services.AddSession();
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddSignalR(options =>
+{
+    // Setting the keep-alive interval (defaults to 15 seconds)
+    options.KeepAliveInterval = TimeSpan.FromSeconds(10); // Customize as needed
+    // Setting the client timeout (defaults to 30 seconds)
+    options.ClientTimeoutInterval = TimeSpan.FromSeconds(20); // Customize as needed
+});
 builder.Services.AddScoped<IOrderDetailsRepository, OrderDetailsRepository>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IFeedBackRepository, FeedBackRepository>();
 var app = builder.Build();
@@ -46,8 +54,10 @@ app.UseSession();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.UseAuthorization();
-
-app.MapRazorPages();
+app.UseEndpoints(endp =>
+{
+    endp.MapRazorPages();
+    endp.MapHub<SignalrServer>("/signalrServer");
+});
 
 await app.RunAsync();

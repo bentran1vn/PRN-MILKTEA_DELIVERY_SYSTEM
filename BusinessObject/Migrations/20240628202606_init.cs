@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace BusinessObject.Migrations
 {
     /// <inheritdoc />
-    public partial class init_project : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -78,6 +78,30 @@ namespace BusinessObject.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Vouchers",
+                columns: table => new
+                {
+                    voucherID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    voucherName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    amount = table.Column<double>(type: "float", nullable: false),
+                    min = table.Column<double>(type: "float", nullable: false),
+                    max = table.Column<double>(type: "float", nullable: false),
+                    quantity = table.Column<int>(type: "int", nullable: false),
+                    create_By = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    update_By = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    delete_By = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    create_At = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    update_At = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    delete_At = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    status = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Vouchers", x => x.voucherID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
@@ -119,11 +143,11 @@ namespace BusinessObject.Migrations
                 name: "Orders",
                 columns: table => new
                 {
-                    orderID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    orderID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     userID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     shipperID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     note = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    voucherID = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    voucherID = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     total = table.Column<double>(type: "float", nullable: false),
                     create_By = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     update_By = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -148,6 +172,12 @@ namespace BusinessObject.Migrations
                         principalTable: "Users",
                         principalColumn: "userID",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Orders_Vouchers_voucherID",
+                        column: x => x.voucherID,
+                        principalTable: "Vouchers",
+                        principalColumn: "voucherID",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -155,10 +185,9 @@ namespace BusinessObject.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    orderID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    orderID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     productID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     quantity = table.Column<int>(type: "int", nullable: false),
-                    price = table.Column<double>(type: "float", nullable: false),
                     note = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -175,36 +204,6 @@ namespace BusinessObject.Migrations
                         column: x => x.productID,
                         principalTable: "Products",
                         principalColumn: "ProductID",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Vouchers",
-                columns: table => new
-                {
-                    voucherID = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    voucherName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    amount = table.Column<double>(type: "float", nullable: false),
-                    min = table.Column<double>(type: "float", nullable: false),
-                    max = table.Column<double>(type: "float", nullable: false),
-                    quantity = table.Column<int>(type: "int", nullable: false),
-                    create_By = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    update_By = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    delete_By = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    create_At = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    update_At = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    delete_At = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    status = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Vouchers", x => x.voucherID);
-                    table.ForeignKey(
-                        name: "FK_Vouchers_Orders_voucherID",
-                        column: x => x.voucherID,
-                        principalTable: "Orders",
-                        principalColumn: "orderID",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -316,27 +315,27 @@ namespace BusinessObject.Migrations
                 columns: new[] { "orderID", "create_At", "create_By", "delete_At", "delete_By", "note", "shipperID", "status", "total", "update_At", "update_By", "userID", "voucherID" },
                 values: new object[,]
                 {
-                    { "order1", null, null, null, null, "notenote", "123125", 1, 1000000.0, null, null, "123123", null },
-                    { "order2", null, null, null, null, "notenote", "123125", 1, 1500000.0, null, null, "123123", null },
-                    { "order3", null, null, null, null, "notenote", "123125", 1, 1500000.0, null, null, "123126", null }
+                    { new Guid("11111111-1111-1111-1111-111111111111"), null, null, null, null, "notenote", "123125", 1, 1000000.0, null, null, "123123", null },
+                    { new Guid("22222222-2222-2222-2222-222222222222"), null, null, null, null, "notenote", "123125", 1, 1500000.0, null, null, "123123", null },
+                    { new Guid("33333333-3333-3333-3333-333333333333"), null, null, null, null, "notenote", "123125", 1, 1500000.0, null, null, "123126", null }
                 });
 
             migrationBuilder.InsertData(
                 table: "OrderDetails",
-                columns: new[] { "Id", "note", "orderID", "price", "productID", "quantity" },
+                columns: new[] { "Id", "note", "orderID", "productID", "quantity" },
                 values: new object[,]
                 {
-                    { new Guid("23b73d0c-0554-452e-ad85-995cd2d8bd74"), "Note", "order1", 100000.0, "product4", 1 },
-                    { new Guid("7d80091a-dd29-4685-87c1-f5e5260d422d"), "Note", "order3", 100000.0, "product6", 1 },
-                    { new Guid("816d7284-f74a-431a-a65a-49fcfe9eae9d"), "Note", "order3", 100000.0, "product4", 1 },
-                    { new Guid("85f54589-6be4-4138-9472-1218ca294b43"), "Note", "order3", 100000.0, "product3", 1 },
-                    { new Guid("95890b0f-b3f8-4efb-819f-1121d3282974"), "Note", "order1", 100000.0, "product1", 1 },
-                    { new Guid("a5a2a1ca-e947-4d9a-8a32-625015ae1ade"), "Note", "order2", 100000.0, "product6", 1 },
-                    { new Guid("a879d5c3-d538-4172-8aff-0d82c2e4ec5d"), "Note", "order2", 100000.0, "product8", 1 },
-                    { new Guid("ce396d1c-ec32-4863-b6f4-1142b0f3b02b"), "Note", "order1", 100000.0, "product3", 1 },
-                    { new Guid("cf623103-3498-4f5b-8ff6-09b7c53d941b"), "Note", "order2", 100000.0, "product5", 1 },
-                    { new Guid("d5776d1d-7fb2-4c35-96e7-e6ac475038bd"), "Note", "order1", 100000.0, "product2", 1 },
-                    { new Guid("fda18069-f65a-4c6b-b6d4-34809a372763"), "Note", "order2", 100000.0, "product7", 1 }
+                    { new Guid("0399ea72-a887-4607-aea5-57411e9d38da"), "Note", new Guid("22222222-2222-2222-2222-222222222222"), "product6", 1 },
+                    { new Guid("040026e5-b535-47ac-9b66-a918f6845996"), "Note", new Guid("33333333-3333-3333-3333-333333333333"), "product6", 1 },
+                    { new Guid("2b4a9459-aef5-4af7-bb69-f0466e6ed23a"), "Note", new Guid("33333333-3333-3333-3333-333333333333"), "product4", 1 },
+                    { new Guid("34b5c429-6fdf-4b1e-874e-f5574d839beb"), "Note", new Guid("11111111-1111-1111-1111-111111111111"), "product1", 1 },
+                    { new Guid("8813041e-0464-4c99-9d52-74c000f27d40"), "Note", new Guid("22222222-2222-2222-2222-222222222222"), "product7", 1 },
+                    { new Guid("905918e1-df09-44aa-9231-2011c35eec47"), "Note", new Guid("11111111-1111-1111-1111-111111111111"), "product2", 1 },
+                    { new Guid("ad533ef6-a021-4f99-8c56-c3813012bc00"), "Note", new Guid("22222222-2222-2222-2222-222222222222"), "product5", 1 },
+                    { new Guid("c73a5cb1-e62a-4eed-b90a-633982f61ebb"), "Note", new Guid("11111111-1111-1111-1111-111111111111"), "product3", 1 },
+                    { new Guid("e0013bb4-a635-4d6b-b1bf-ab8605947b62"), "Note", new Guid("33333333-3333-3333-3333-333333333333"), "product3", 1 },
+                    { new Guid("e8c0e31b-9d9e-428e-82b0-044d5a8d0e9d"), "Note", new Guid("22222222-2222-2222-2222-222222222222"), "product8", 1 },
+                    { new Guid("f4db7eff-4add-490a-8f41-1ed04c2799cd"), "Note", new Guid("11111111-1111-1111-1111-111111111111"), "product4", 1 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -371,6 +370,11 @@ namespace BusinessObject.Migrations
                 column: "userID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Orders_voucherID",
+                table: "Orders",
+                column: "voucherID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Users_rankID",
                 table: "Users",
                 column: "rankID");
@@ -388,9 +392,6 @@ namespace BusinessObject.Migrations
                 name: "FeedBacks");
 
             migrationBuilder.DropTable(
-                name: "Vouchers");
-
-            migrationBuilder.DropTable(
                 name: "OrderDetails");
 
             migrationBuilder.DropTable(
@@ -401,6 +402,9 @@ namespace BusinessObject.Migrations
 
             migrationBuilder.DropTable(
                 name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "Vouchers");
 
             migrationBuilder.DropTable(
                 name: "Ranks");
