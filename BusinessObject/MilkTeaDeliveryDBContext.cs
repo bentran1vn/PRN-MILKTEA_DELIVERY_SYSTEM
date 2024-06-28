@@ -35,10 +35,18 @@ namespace BusinessObject
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
-            modelBuilder.Entity<Order>()
-                .HasOne<User>(x => x.Users)
-                .WithMany(s => s.Orders)
-                .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Order>(entity =>
+            {
+                entity.HasKey(e => e.orderID);
+                
+                entity.HasOne<User>(x => x.Users)
+                    .WithMany(s => s.Orders)
+                    .OnDelete(DeleteBehavior.Restrict);
+                
+                entity.HasOne<Voucher>(x => x.Vouchers)
+                    .WithMany(v => v.Orders)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
             
             modelBuilder.Entity<OrderDetail>(entity =>
             {
@@ -81,11 +89,7 @@ namespace BusinessObject
                 .HasForeignKey(u => u.roleID) // Foreign key in User table
                 .OnDelete(DeleteBehavior.Restrict); // Set delete behavior to Restrict
             
-            modelBuilder.Entity<Order>()
-                .HasOne<Voucher>(x => x.Vouchers)
-                .WithOne()
-                .HasForeignKey<Voucher>(x => x.voucherID)
-                .OnDelete(DeleteBehavior.Restrict);
+
             
             modelBuilder.Entity<Rank>().HasData(
                 new Rank()
@@ -517,125 +521,117 @@ namespace BusinessObject
                 }
             );
             
+            
             modelBuilder.Entity<Order>().HasData(
-                new Order()
-                {
-                    orderID = "order1",
-                    userID = "123123",
-                    total = 1000000,
-                    shipperID = "123125",
-                    status = 1,
-                    note = "notenote",
-                },
-                new Order()
-                {
-                    orderID = "order2",
-                    userID = "123123",
-                    total = 1500000,
-                    shipperID = "123125",
-                    status = 1,
-                    note = "notenote",
-                },
-                new Order()
-                {
-                    orderID = "order3",
-                    userID = "123126",
-                    total = 1500000,
-                    shipperID = "123125",
-                    status = 1,
-                    note = "notenote",
-                }
-            );
-            modelBuilder.Entity<OrderDetail>().HasData(
-                new OrderDetail()
-                {
-                    orderID = "order1",
-                    productID = "product1",
-                    quantity = 1,
-                    note = "Note",
-                    price = 100000
-                },
-                new OrderDetail()
-                {
-                    orderID = "order1",
-                    productID = "product2",
-                    quantity = 1,
-                    note = "Note",
-                    price = 100000
-                },
-                new OrderDetail()
-                {
-                    orderID = "order1",
-                    productID = "product3",
-                    quantity = 1,
-                    note = "Note",
-                    price = 100000
-                },
-                new OrderDetail()
-                {
-                    orderID = "order1",
-                    productID = "product4",
-                    quantity = 1,
-                    note = "Note",
-                    price = 100000
-                },
-                new OrderDetail()
-                {
-                    orderID = "order3",
-                    productID = "product3",
-                    quantity = 1,
-                    note = "Note",
-                    price = 100000
-                },
-                new OrderDetail()
-                {
-                    orderID = "order3",
-                    productID = "product4",
-                    quantity = 1,
-                    note = "Note",
-                    price = 100000
-                },
-                new OrderDetail()
-                {
-                    orderID = "order3",
-                    productID = "product6",
-                    quantity = 1,
-                    note = "Note",
-                    price = 100000
-                },
-                new OrderDetail()
-                {
-                    orderID = "order2",
-                    productID = "product5",
-                    quantity = 1,
-                    note = "Note",
-                    price = 100000
-                },
-                new OrderDetail()
-                {
-                    orderID = "order2",
-                    productID = "product6",
-                    quantity = 1,
-                    note = "Note",
-                    price = 100000
-                },
-                new OrderDetail()
-                {
-                    orderID = "order2",
-                    productID = "product7",
-                    quantity = 1,
-                    note = "Note",
-                    price = 100000
-                },
-                new OrderDetail()
-                {
-                    orderID = "order2",
-                    productID = "product8",
-                    quantity = 1,
-                    note = "Note",
-                    price = 100000
-                }
-            );
+    new Order()
+    {
+        orderID = new Guid("11111111-1111-1111-1111-111111111111"), // Correct GUID format
+        userID = "123123",
+        total = 1000000,
+        shipperID = "123125",
+        status = 1,
+        note = "notenote",
+    },
+    new Order()
+    {
+        orderID = new Guid("22222222-2222-2222-2222-222222222222"), // Correct GUID format
+        userID = "123123",
+        total = 1500000,
+        shipperID = "123125",
+        status = 1,
+        note = "notenote",
+    },
+    new Order()
+    {
+        orderID = new Guid("33333333-3333-3333-3333-333333333333"), // Correct GUID format
+        userID = "123126",
+        total = 1500000,
+        shipperID = "123125",
+        status = 1,
+        note = "notenote",
+    }
+);
+
+modelBuilder.Entity<OrderDetail>().HasData(
+    new OrderDetail()
+    {
+        orderID = new Guid("11111111-1111-1111-1111-111111111111"), // Matching GUID with Order
+        productID = "product1",
+        quantity = 1,
+        note = "Note",
+    },
+    new OrderDetail()
+    {
+        orderID = new Guid("11111111-1111-1111-1111-111111111111"), // Matching GUID with Order
+        productID = "product2",
+        quantity = 1,
+        note = "Note",
+    },
+    new OrderDetail()
+    {
+        orderID = new Guid("11111111-1111-1111-1111-111111111111"), // Matching GUID with Order
+        productID = "product3",
+        quantity = 1,
+        note = "Note",
+    },
+    new OrderDetail()
+    {
+        orderID = new Guid("11111111-1111-1111-1111-111111111111"), // Matching GUID with Order
+        productID = "product4",
+        quantity = 1,
+        note = "Note",
+    },
+    new OrderDetail()
+    {
+        orderID = new Guid("33333333-3333-3333-3333-333333333333"), // Matching GUID with Order
+        productID = "product3",
+        quantity = 1,
+        note = "Note",
+    },
+    new OrderDetail()
+    {
+        orderID = new Guid("33333333-3333-3333-3333-333333333333"), // Matching GUID with Order
+        productID = "product4",
+        quantity = 1,
+        note = "Note",
+    },
+    new OrderDetail()
+    {
+        orderID = new Guid("33333333-3333-3333-3333-333333333333"), // Matching GUID with Order
+        productID = "product6",
+        quantity = 1,
+        note = "Note",
+    },
+    new OrderDetail()
+    {
+        orderID = new Guid("22222222-2222-2222-2222-222222222222"), // Matching GUID with Order
+        productID = "product5",
+        quantity = 1,
+        note = "Note",
+    },
+    new OrderDetail()
+    {
+        orderID = new Guid("22222222-2222-2222-2222-222222222222"), // Matching GUID with Order
+        productID = "product6",
+        quantity = 1,
+        note = "Note",
+    },
+    new OrderDetail()
+    {
+        orderID = new Guid("22222222-2222-2222-2222-222222222222"), // Matching GUID with Order
+        productID = "product7",
+        quantity = 1,
+        note = "Note",
+    },
+    new OrderDetail()
+    {
+        orderID = new Guid("22222222-2222-2222-2222-222222222222"), // Matching GUID with Order
+        productID = "product8",
+        quantity = 1,
+        note = "Note",
+    }
+);
+
         }
     }
 }

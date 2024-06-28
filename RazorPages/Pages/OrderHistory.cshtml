@@ -1,0 +1,125 @@
+@page
+@model RazorPages.Pages.OrderHistory
+
+@{
+    Layout = "Shared/_AdminLayout";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Order Histories</title>
+</head>
+<body>
+<div>
+    <h2 class="mb-4 ml-2">Order History</h2>
+    <table class="table table-striped table-bordered">
+        <thead class="thead-dark">
+        <tr>
+            <th>OrderId</th>
+            <th>Username</th>
+            <th>Number Product</th>
+            <th>TotalMoney</th>
+            <th>Shipper Name</th>
+            <th>Created At</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody id="orderHistoryList">
+            <tr>
+                <td>001</td>
+                <td>Alice</td>
+                <td>3</td>
+                <td>$150.00</td>
+                <td>FedEx</td>
+                <td>2023-06-01</td>
+                <td>
+                    <button class="btn btn-info btn-sm">Detail</button>
+                </td>
+            </tr>
+            <tr>
+                <td>002</td>
+                <td>Bob</td>
+                <td>5</td>
+                <td>$250.00</td>
+                <td>UPS</td>
+                <td>2023-06-02</td>
+                <td>
+                    <button class="btn btn-info btn-sm">Detail</button>
+                </td>
+            </tr>
+            <tr>
+                <td>003</td>
+                <td>Carol</td>
+                <td>2</td>
+                <td>$100.00</td>
+                <td>DHL</td>
+                <td>2023-06-03</td>
+                <td>
+                    <button class="btn btn-info btn-sm">Detail</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/5.0.11/signalr.min.js"></script>
+<script type="text/javascript">
+        const connection = new signalR.HubConnectionBuilder()
+        .withUrl("/signalrServer")
+        .withAutomaticReconnect() // Automatically attempt to reconnect if the connection is lost
+        .configureLogging(signalR.LogLevel.Information)
+        .withHubProtocol(new signalR.JsonHubProtocol())
+        .build();
+
+        connection.serverTimeoutInMilliseconds = 60000;
+            
+        console.log(connection);
+
+        connection.on("NewOrder", function (oderHistoryModel) {
+            console.log(oderHistoryModel)
+            const tr = document.createElement("tr");
+            
+            // Create and append each table cell (td) to the row
+            const orderIdTd = document.createElement("td");
+            orderIdTd.textContent = oderHistoryModel.orderId;
+            tr.appendChild(orderIdTd);
+
+            const usernameTd = document.createElement("td");
+            usernameTd.textContent = oderHistoryModel.user_Name;
+            tr.appendChild(usernameTd);
+
+            const numberProductTd = document.createElement("td");
+            numberProductTd.textContent = oderHistoryModel.numOfProduct;
+            tr.appendChild(numberProductTd);
+
+            const totalMoneyTd = document.createElement("td");
+            totalMoneyTd.textContent = oderHistoryModel.total; // Formatting as currency
+            tr.appendChild(totalMoneyTd);
+
+            const shipperNameTd = document.createElement("td");
+            shipperNameTd.textContent = oderHistoryModel.shipperName;
+            tr.appendChild(shipperNameTd);
+
+            const createdAtTd = document.createElement("td");
+            createdAtTd.textContent = oderHistoryModel.create_At; // Assuming it's a readable date string
+            tr.appendChild(createdAtTd);
+
+            // Create the action button cell
+            const actionsTd = document.createElement("td");
+            const detailButton = document.createElement("button");
+            detailButton.className = "btn btn-info btn-sm";
+            detailButton.textContent = "Detail";
+            actionsTd.appendChild(detailButton);
+            tr.appendChild(actionsTd);
+
+            // Append the new row to the table body with id 'orderHistoryList'
+            document.getElementById("orderHistoryList").appendChild(tr);
+        });
+
+        connection.start().catch(function (err) {
+            return console.error(err.toString());
+        });
+    </script>
+</body>
+</html>

@@ -77,8 +77,9 @@ namespace BusinessObject.Migrations
 
             modelBuilder.Entity("BusinessObject.Entities.Order", b =>
                 {
-                    b.Property<string>("orderID")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("orderID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("create_At")
                         .HasColumnType("datetime2");
@@ -117,7 +118,7 @@ namespace BusinessObject.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("voucherID")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("orderID");
 
@@ -125,12 +126,14 @@ namespace BusinessObject.Migrations
 
                     b.HasIndex("userID");
 
+                    b.HasIndex("voucherID");
+
                     b.ToTable("Orders");
 
                     b.HasData(
                         new
                         {
-                            orderID = "order1",
+                            orderID = new Guid("11111111-1111-1111-1111-111111111111"),
                             note = "notenote",
                             shipperID = "123125",
                             status = 1,
@@ -139,7 +142,7 @@ namespace BusinessObject.Migrations
                         },
                         new
                         {
-                            orderID = "order2",
+                            orderID = new Guid("22222222-2222-2222-2222-222222222222"),
                             note = "notenote",
                             shipperID = "123125",
                             status = 1,
@@ -148,7 +151,7 @@ namespace BusinessObject.Migrations
                         },
                         new
                         {
-                            orderID = "order3",
+                            orderID = new Guid("33333333-3333-3333-3333-333333333333"),
                             note = "notenote",
                             shipperID = "123125",
                             status = 1,
@@ -167,12 +170,8 @@ namespace BusinessObject.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("orderID")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<double>("price")
-                        .HasColumnType("float");
+                    b.Property<Guid>("orderID")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("productID")
                         .IsRequired()
@@ -192,100 +191,89 @@ namespace BusinessObject.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("95890b0f-b3f8-4efb-819f-1121d3282974"),
+                            Id = new Guid("34b5c429-6fdf-4b1e-874e-f5574d839beb"),
                             note = "Note",
-                            orderID = "order1",
-                            price = 100000.0,
+                            orderID = new Guid("11111111-1111-1111-1111-111111111111"),
                             productID = "product1",
                             quantity = 1
                         },
                         new
                         {
-                            Id = new Guid("d5776d1d-7fb2-4c35-96e7-e6ac475038bd"),
+                            Id = new Guid("905918e1-df09-44aa-9231-2011c35eec47"),
                             note = "Note",
-                            orderID = "order1",
-                            price = 100000.0,
+                            orderID = new Guid("11111111-1111-1111-1111-111111111111"),
                             productID = "product2",
                             quantity = 1
                         },
                         new
                         {
-                            Id = new Guid("ce396d1c-ec32-4863-b6f4-1142b0f3b02b"),
+                            Id = new Guid("c73a5cb1-e62a-4eed-b90a-633982f61ebb"),
                             note = "Note",
-                            orderID = "order1",
-                            price = 100000.0,
+                            orderID = new Guid("11111111-1111-1111-1111-111111111111"),
                             productID = "product3",
                             quantity = 1
                         },
                         new
                         {
-                            Id = new Guid("23b73d0c-0554-452e-ad85-995cd2d8bd74"),
+                            Id = new Guid("f4db7eff-4add-490a-8f41-1ed04c2799cd"),
                             note = "Note",
-                            orderID = "order1",
-                            price = 100000.0,
+                            orderID = new Guid("11111111-1111-1111-1111-111111111111"),
                             productID = "product4",
                             quantity = 1
                         },
                         new
                         {
-                            Id = new Guid("85f54589-6be4-4138-9472-1218ca294b43"),
+                            Id = new Guid("e0013bb4-a635-4d6b-b1bf-ab8605947b62"),
                             note = "Note",
-                            orderID = "order3",
-                            price = 100000.0,
+                            orderID = new Guid("33333333-3333-3333-3333-333333333333"),
                             productID = "product3",
                             quantity = 1
                         },
                         new
                         {
-                            Id = new Guid("816d7284-f74a-431a-a65a-49fcfe9eae9d"),
+                            Id = new Guid("2b4a9459-aef5-4af7-bb69-f0466e6ed23a"),
                             note = "Note",
-                            orderID = "order3",
-                            price = 100000.0,
+                            orderID = new Guid("33333333-3333-3333-3333-333333333333"),
                             productID = "product4",
                             quantity = 1
                         },
                         new
                         {
-                            Id = new Guid("7d80091a-dd29-4685-87c1-f5e5260d422d"),
+                            Id = new Guid("040026e5-b535-47ac-9b66-a918f6845996"),
                             note = "Note",
-                            orderID = "order3",
-                            price = 100000.0,
+                            orderID = new Guid("33333333-3333-3333-3333-333333333333"),
                             productID = "product6",
                             quantity = 1
                         },
                         new
                         {
-                            Id = new Guid("cf623103-3498-4f5b-8ff6-09b7c53d941b"),
+                            Id = new Guid("ad533ef6-a021-4f99-8c56-c3813012bc00"),
                             note = "Note",
-                            orderID = "order2",
-                            price = 100000.0,
+                            orderID = new Guid("22222222-2222-2222-2222-222222222222"),
                             productID = "product5",
                             quantity = 1
                         },
                         new
                         {
-                            Id = new Guid("a5a2a1ca-e947-4d9a-8a32-625015ae1ade"),
+                            Id = new Guid("0399ea72-a887-4607-aea5-57411e9d38da"),
                             note = "Note",
-                            orderID = "order2",
-                            price = 100000.0,
+                            orderID = new Guid("22222222-2222-2222-2222-222222222222"),
                             productID = "product6",
                             quantity = 1
                         },
                         new
                         {
-                            Id = new Guid("fda18069-f65a-4c6b-b6d4-34809a372763"),
+                            Id = new Guid("8813041e-0464-4c99-9d52-74c000f27d40"),
                             note = "Note",
-                            orderID = "order2",
-                            price = 100000.0,
+                            orderID = new Guid("22222222-2222-2222-2222-222222222222"),
                             productID = "product7",
                             quantity = 1
                         },
                         new
                         {
-                            Id = new Guid("a879d5c3-d538-4172-8aff-0d82c2e4ec5d"),
+                            Id = new Guid("e8c0e31b-9d9e-428e-82b0-044d5a8d0e9d"),
                             note = "Note",
-                            orderID = "order2",
-                            price = 100000.0,
+                            orderID = new Guid("22222222-2222-2222-2222-222222222222"),
                             productID = "product8",
                             quantity = 1
                         });
@@ -995,9 +983,16 @@ namespace BusinessObject.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("BusinessObject.Entities.Voucher", "Vouchers")
+                        .WithMany("Orders")
+                        .HasForeignKey("voucherID")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.Navigation("Shippers");
 
                     b.Navigation("Users");
+
+                    b.Navigation("Vouchers");
                 });
 
             modelBuilder.Entity("BusinessObject.Entities.OrderDetail", b =>
@@ -1038,20 +1033,6 @@ namespace BusinessObject.Migrations
                     b.Navigation("Roles");
                 });
 
-            modelBuilder.Entity("BusinessObject.Entities.Voucher", b =>
-                {
-                    b.HasOne("BusinessObject.Entities.Order", null)
-                        .WithOne("Vouchers")
-                        .HasForeignKey("BusinessObject.Entities.Voucher", "voucherID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("BusinessObject.Entities.Order", b =>
-                {
-                    b.Navigation("Vouchers");
-                });
-
             modelBuilder.Entity("BusinessObject.Entities.Rank", b =>
                 {
                     b.Navigation("Users");
@@ -1063,6 +1044,11 @@ namespace BusinessObject.Migrations
                 });
 
             modelBuilder.Entity("BusinessObject.Entities.User", b =>
+                {
+                    b.Navigation("Orders");
+                });
+
+            modelBuilder.Entity("BusinessObject.Entities.Voucher", b =>
                 {
                     b.Navigation("Orders");
                 });

@@ -24,5 +24,7 @@ namespace BusinessObject.Entities
         public DateTime? update_At { get; set; }
         public DateTime? delete_At { get; set; }
         public bool status {  get; set; }
+        
+        public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
     }
 }

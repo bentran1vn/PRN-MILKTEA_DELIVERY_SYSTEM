@@ -11,10 +11,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="appsettings.json" />
     <None Include="wwwroot\css\cart.css" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.1.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.2" />
   </ItemGroup>
 
