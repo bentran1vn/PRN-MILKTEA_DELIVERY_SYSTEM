@@ -94,7 +94,6 @@ namespace DataAccessObject
                 found.description = voucher.description;
                 found.amount = voucher.amount;
                 found.min = voucher.min;
-                found.max = voucher.max;
                 found.quantity = voucher.quantity;
                 found.create_By = voucher.create_By;
                 found.create_At = voucher.create_At;

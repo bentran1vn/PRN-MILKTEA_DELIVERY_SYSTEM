@@ -15,7 +15,6 @@ namespace BusinessObject.Entities
         public required string description { get; set; }
         public required double amount {  get; set; }
         public required double min { get; set; }
-        public required double max { get; set; }
         public required int quantity { get; set; }
         public string? create_By { get; set; }
         public string? update_By { get; set; }
