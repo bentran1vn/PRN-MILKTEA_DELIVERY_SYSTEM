@@ -50,7 +50,7 @@ namespace DataAccessObject
             }
         }
 
-        public string Add(Voucher voucher)
+        public async Task<string> Add(Voucher voucher)
         {
             try
             {
@@ -58,8 +58,8 @@ namespace DataAccessObject
                 if (db.Vouchers.Any(x => x.voucherID.Equals(voucher.voucherID)))
                     throw new Exception("Duplicated id");
                 voucher.create_At = DateTime.Now;
-                db.Vouchers.Add(voucher);
-                return db.SaveChanges() > 0 ? "Add success!" : "Add failed!";
+                await db.Vouchers.AddAsync(voucher);
+                return await db.SaveChangesAsync() > 0 ? "Add success!" : "Add failed!";
             }
             catch (Exception ex)
             {

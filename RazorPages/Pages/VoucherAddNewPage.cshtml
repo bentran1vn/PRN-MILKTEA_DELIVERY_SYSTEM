@@ -1,0 +1,67 @@
+﻿@page
+@model RazorPages.Pages.VoucherAddNewPageModel
+
+@{
+    ViewData["Title"] = "Create Voucher";
+    Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Create new voucher</h1>
+
+<h4>Voucher</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Voucher.voucherName" class="control-label">Voucher Name</label>
+                <input asp-for="Voucher.voucherName" class="form-control" />
+                <span asp-validation-for="Voucher.voucherName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Voucher.description" class="control-label">Description</label>
+                <input asp-for="Voucher.description" class="form-control" />
+                <span asp-validation-for="Voucher.description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Voucher.amount" class="control-label">Amount</label>
+                <input asp-for="Voucher.amount" class="form-control" />
+                <span asp-validation-for="Voucher.amount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Voucher.min" class="control-label">Minimum order value</label>
+                <input asp-for="Voucher.min" class="form-control" />
+                <span asp-validation-for="Voucher.min" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Voucher.max" class="control-label">Maximum decreasing</label>
+                <input asp-for="Voucher.max" class="form-control" />
+                <span asp-validation-for="Voucher.max" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Voucher.quantity" class="control-label">Quantity</label>
+                <input asp-for="Voucher.quantity" class="form-control" />
+                <span asp-validation-for="Voucher.quantity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@if(Model.msg != null || Model.msg != "")
+{
+    <p>
+        @Model.msg
+    </p>
+}
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

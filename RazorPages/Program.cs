@@ -7,6 +7,7 @@ using Repositories.OrderDetails;
 using Repositories.Products;
 using Repositories.SignalR;
 using Repositories.UploadFileService;
+using Repositories.Voucher;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -36,6 +37,7 @@ builder.Services.AddSignalR(options =>
 builder.Services.AddScoped<IOrderDetailsRepository, OrderDetailsRepository>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IVoucherRepository, VoucherRepository>();
 builder.Services.AddScoped<IFeedBackRepository, FeedBackRepository>();
 builder.Services.AddScoped <IImageUploadService, CloudinaryImageUploadService> ();
 var app = builder.Build();
