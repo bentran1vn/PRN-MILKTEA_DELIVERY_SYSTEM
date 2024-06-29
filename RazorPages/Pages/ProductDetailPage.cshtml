@@ -1,0 +1,61 @@
+@page
+@model RazorPages.Pages.ProductDetailPage
+
+@{
+    Layout = "Shared/_AdminLayout";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<div>
+    <h2 class="mb-4">Product Detail</h2>
+    <form method="post" enctype="multipart/form-data">
+        <div style="text-align: center;">
+            <img src="@Model.ProductModel.Imgs" style="width: 150px; height: 150px; object-fit: cover; border-radius: 50%;" />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="ProductModel.ProductName">Product Name:</label>
+            <input type="text" class="form-control" asp-for="ProductModel.ProductName"/>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="ProductModel.ProductDescription">Product Description:</label>
+            <textarea class="form-control" asp-for="ProductModel.ProductDescription"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="ProductModel.ProductType">Product Type:</label>
+            <select class="form-control" asp-for="ProductModel.ProductType">
+                <option value="1">Hot</option>
+                <option value="0">Cool</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="ProductModel.Price">Price:</label>
+            <input type="number" class="form-control" asp-for="ProductModel.Price" step="0.01"/>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="ProductModel.Quantity">Quantity:</label>
+            <input type="number" class="form-control" asp-for="ProductModel.Quantity"/>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="FileUpload">Change Image:</label>
+            <input type="file" class="form-control" asp-for="FileUpload"/>
+        </div>
+        <div class="d-flex">
+            <button type="submit" class="btn btn-primary">Create Product</button>
+        </div>
+    </form>
+    
+</div>
+</body>
+</html>

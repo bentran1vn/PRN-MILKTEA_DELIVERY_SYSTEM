@@ -20,10 +20,10 @@ public class ProductDAO
         _context.SaveChanges();
     }
 
-    public void Add(Product product)
+    public async Task Add(Product product)
     {
-        _context.Products.Add(product);
-        _context.SaveChanges();
+        await _context.Products.AddAsync(product);
+        await _context.SaveChangesAsync();
     }
 
     public void Update(Product product)
@@ -35,5 +35,10 @@ public class ProductDAO
     public Product? FindProductById(string productId)
     {
         return _context.Products.AsNoTracking().FirstOrDefault(x => x.ProductID.Equals(productId));
+    }
+
+    public object GetAllDesc()
+    {
+        throw new NotImplementedException();
     }
 }
