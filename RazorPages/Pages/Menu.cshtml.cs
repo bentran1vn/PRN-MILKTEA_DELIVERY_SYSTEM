@@ -16,9 +16,7 @@ public class Menu : PageModel
     [BindProperty] public IList<Product> ProductList { set; get; }
     
     [BindProperty] public int TotalProPage { set; get; }
-
-    [BindProperty] public int CurrentPage { set; get; } = 1;
-
+    
     public void OnGet(string? pageNum = "1", string pageSize = "9")
     {
         if (!Int32.TryParse(pageNum, out int pageNumInt)) return;

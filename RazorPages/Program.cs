@@ -6,6 +6,8 @@ using Repositories.Orders;
 using Repositories.OrderDetails;
 using Repositories.Products;
 using Repositories.SignalR;
+using Repositories.UploadFileService;
+
 
 var builder = WebApplication.CreateBuilder(args);
 var cookiePolicyOptions = new CookiePolicyOptions
@@ -35,6 +37,7 @@ builder.Services.AddScoped<IOrderDetailsRepository, OrderDetailsRepository>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IFeedBackRepository, FeedBackRepository>();
+builder.Services.AddScoped <IImageUploadService, CloudinaryImageUploadService> ();
 var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

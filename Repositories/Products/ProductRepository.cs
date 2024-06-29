@@ -13,20 +13,25 @@ public class ProductRepository: IProductRepository
         var result = _dao.GetAll();
         return result.Skip((pageNum-1) * pageSize).Take(pageSize);
     }
+    public IEnumerable<Product> GetAllDes(int pageNum, int pageSize)
+    {
+        var result = _dao.GetAll().OrderByDescending(x => x.CreateAt);;
+        return result.Skip((pageNum-1) * pageSize).Take(pageSize);
+    }
 
     public IEnumerable<Product> GetAll()
     {
         return _dao.GetAll();
     }
 
-    public void DeleteCategory(string productId)
+    public void DeleteProduct(string productId)
     {
         _dao.Delete(productId);
     }
 
-    public void AddCategory(Product product)
+    public async Task AddProduct(Product product)
     {
-        _dao.Add(product);
+        await _dao.Add(product);
     }
 
     public void UpdateCategory(Product product)
