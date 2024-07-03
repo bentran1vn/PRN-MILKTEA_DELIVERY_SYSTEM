@@ -1,0 +1,234 @@
+@page
+@model RazorPages.Pages.Checkout
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>CheckOutPage</title>
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.css' rel='stylesheet' />
+    <script src="https://unpkg.com/@@turf/turf@6.5.0/turf.min.js"></script>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { margin: 0; padding: 0; }
+        #map {position: relative; height: 400px; width: 440px; }
+        #distance { position: absolute; top: 10px; left: 10px; background: white; padding: 5px; z-index: 1; }
+        .map-container {
+            height: 400px; /* Adjust map height as needed */
+        }
+    </style>
+</head>
+<body>
+
+
+<div class="d-flex justify-content-center align-items-center py-5" style="height: 100vh; width: 100%">
+    <div class="row">
+        <div class="col-md-7">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h1 class="card-title">Order Billing</h1>
+                        <a class="text-decoration-underline text-black " asp-page="./Cart">Back To Check Out</a>
+                    </div>
+                    <hr>
+                    <div class="my-3">Order ID: 12312312312312231</div>
+                    <ul class="pl-0 list-group list-group-flush border p-4">
+                        @if (Model.SessionList != null && Model.SessionList.Count != 0)
+                        {
+                            @foreach (var item in Model.SessionList)
+                            {
+                                <li class="list-group-item mb-3 border-0 box-shadow shadow-sm">
+                                    <div class="row">
+                                        <div class="col-2">
+                                            <div class="d-flex justify-content-center align-items-center rounded-circle" style="width: 50px; height: 50px; overflow: hidden;">
+                                                <img src="@(Model.CartListModel?.First(x => x.ProductID.Equals(@item.ProductId)).Imgs)" alt="Ảnh sản phẩm" class="img-fluid" style="object-fit: cover; width: 100%; height: 100%;">
+                                            </div>
+                                        </div>
+                                        <div class="col-7">
+                                            <div>
+                                                <div class="text-truncate">Tên Sản phẩm: <strong>@(Model.CartListModel?.First(x => x.ProductID.Equals(@item.ProductId)).ProductName)</strong></div>
+                                                - @(Model.CartListModel?.First(x => x.ProductID.Equals(@item.ProductId)).ProductDescription)
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div>
+                                                Giá: @(Model.CartListModel?.First(x => x.ProductID.Equals(@item.ProductId)).Price)đ<br>
+                                                Số lượng: @item.Quantity <!-- Replace with your dynamic quantity -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            }
+                        }
+                    </ul>
+                    <div class="mt-4 mb-2 d-flex justify-content-end align-items-center">
+                        Ship Distance: 1000km
+                    </div>
+                    <div class="mb-2 d-flex justify-content-end align-items-center">
+                        Ship Cost: 100.000đ
+                    </div>
+                    <div class="mb-3 d-flex justify-content-end">Product Cost: @Model.Total.ToString("N0")đ</div>
+                    <hr>
+                    <div class="mb-3 d-flex justify-content-between align-items-center">
+                        <h3>Total Bill:</h3>
+                        <h4>500000đ</h4>
+                    </div>
+                    <hr>
+                    <div class="mb-3 d-flex justify-content-center">
+                        <form style="width: 100%;">
+                            <button class="btn btn-primary btn-block" type="submit">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="card">
+                <div class="card-body">
+                    <div class="map-container">
+                        <div id="map"></div>
+                        <div id="distance">Total distance: 0 km</div>
+                        @* <div id="status">Latitude: 0.000000, Longitude: 0.000000</div> *@
+                        @* <div id="address">Address: Loading...</div> *@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Set the Mapbox access token
+    mapboxgl.accessToken = 'pk.eyJ1IjoiYmVudHJhbjF2biIsImEiOiJjbHkwOTBqMGgwazNkMm5xMnk0b2IybTI0In0.2MZ0F2VOrCYC4EjnKa2zxw';
+
+    // Initialize the Mapbox map
+    var map = new mapboxgl.Map({
+        container: 'map',
+        center: [106.8014777370877, 10.875373156839077], // Default center
+        zoom: 12, // Initial zoom level
+        style: 'mapbox://styles/mapbox/streets-v11' // Map style
+    });
+
+    // HTML elements to display information
+    const distanceContainer = document.getElementById('distance');
+    const statusContainer = document.getElementById('status');
+
+    // Success function to handle the retrieved location
+    function success(position) {
+        const latitudeUser = position.coords.latitude;
+        const longitudeUser = position.coords.longitude;
+
+        // Update the map's center and zoom level to the user's location
+        map.setCenter([longitudeUser, latitudeUser]);
+        map.setZoom(12); // Closer zoom level to focus on the user's location
+
+        map.on('load', () => {
+            // Default shop marker
+            const marker1Coords = [106.8014777370877, 10.875373156839077];
+            const shopMarker = new mapboxgl.Marker({ color: 'red' })
+                .setLngLat(marker1Coords)
+                .addTo(map);
+
+            // User's location marker
+            const userMarker = new mapboxgl.Marker({ color: 'blue' })
+                .setLngLat([longitudeUser, latitudeUser])
+                .addTo(map);
+
+            // Function to get and display the route
+            async function getRoute(start, end) {
+                // URL for the Directions API
+                const url = `https://api.mapbox.com/directions/v5/mapbox/driving/${start.join(',')};${end.join(',')}?geometries=geojson&access_token=${mapboxgl.accessToken}`;
+
+                // Fetch the route data
+                const response = await fetch(url);
+                const data = await response.json();
+
+                // Extract the route geometry
+                const route = data.routes[0].geometry;
+
+                // Add the route as a source to the map
+                map.addSource('route', {
+                    'type': 'geojson',
+                    'data': {
+                        'type': 'Feature',
+                        'properties': {},
+                        'geometry': route
+                    }
+                });
+
+                // Add the route as a layer to the map
+                map.addLayer({
+                    'id': 'route',
+                    'type': 'line',
+                    'source': 'route',
+                    'layout': {
+                        'line-join': 'round',
+                        'line-cap': 'round'
+                    },
+                    'paint': {
+                        'line-color': '#3887be',
+                        'line-width': 5
+                    }
+                });
+
+                // Calculate the total distance from the Directions API response
+                const distance = data.routes[0].distance / 1000; // Convert to kilometers
+                distanceContainer.textContent = `Total route distance: ${distance.toFixed(2)} km`;
+
+                // Fit the map to the route bounds
+                const coordinates = route.coordinates;
+                const bounds = new mapboxgl.LngLatBounds(coordinates[0], coordinates[0]);
+                for (const coord of coordinates) {
+                    bounds.extend(coord);
+                }
+                map.fitBounds(bounds, {
+                    padding: 50
+                });
+            }
+
+            // Get and display the route between the shop and user's location
+            getRoute(marker1Coords, [longitudeUser, latitudeUser]);
+        });
+
+        // Display the user's coordinates in the status container
+        statusContainer.textContent = `Latitude: ${latitudeUser.toFixed(6)}, Longitude: ${longitudeUser.toFixed(6)}`;
+
+        // Fetch the address of the user's location using the Mapbox Geocoding API
+        fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${longitudeUser},${latitudeUser}.json?access_token=${mapboxgl.accessToken}`)
+            .then(response => response.json())
+            .then(data => {
+                // Get the first result
+                const address = data.features[0].place_name;
+                // Display the address
+                document.getElementById('address').textContent = `Address: ${address}`;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('address').textContent = 'Error retrieving address';
+            });
+    }
+
+    // Error function to handle any issues retrieving the location
+    function error() {
+        statusContainer.textContent = 'Unable to retrieve your location';
+    }
+
+    // Check if the browser supports the Geolocation API
+    if (navigator.geolocation) {
+        // Request the user's location
+        navigator.geolocation.getCurrentPosition(success, error);
+    } else {
+        // Browser does not support the Geolocation API
+        statusContainer.textContent = 'Geolocation is not supported by your browser.';
+    }
+</script>
+</body>
+</html>
