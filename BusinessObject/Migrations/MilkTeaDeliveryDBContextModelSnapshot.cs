@@ -98,7 +98,6 @@ namespace BusinessObject.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("shipperID")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("status")
@@ -191,7 +190,7 @@ namespace BusinessObject.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("34b5c429-6fdf-4b1e-874e-f5574d839beb"),
+                            Id = new Guid("925ea154-72e7-43f9-8edd-42c2cab013ec"),
                             note = "Note",
                             orderID = new Guid("11111111-1111-1111-1111-111111111111"),
                             productID = "product1",
@@ -199,7 +198,7 @@ namespace BusinessObject.Migrations
                         },
                         new
                         {
-                            Id = new Guid("905918e1-df09-44aa-9231-2011c35eec47"),
+                            Id = new Guid("ab695a0c-9a3a-4d72-b9b8-c9c83100c144"),
                             note = "Note",
                             orderID = new Guid("11111111-1111-1111-1111-111111111111"),
                             productID = "product2",
@@ -207,7 +206,7 @@ namespace BusinessObject.Migrations
                         },
                         new
                         {
-                            Id = new Guid("c73a5cb1-e62a-4eed-b90a-633982f61ebb"),
+                            Id = new Guid("1b9875db-2862-4db2-9147-2ab9c9aafd49"),
                             note = "Note",
                             orderID = new Guid("11111111-1111-1111-1111-111111111111"),
                             productID = "product3",
@@ -215,7 +214,7 @@ namespace BusinessObject.Migrations
                         },
                         new
                         {
-                            Id = new Guid("f4db7eff-4add-490a-8f41-1ed04c2799cd"),
+                            Id = new Guid("54b0a392-104e-4cd5-b44c-e41e4d9ff6d9"),
                             note = "Note",
                             orderID = new Guid("11111111-1111-1111-1111-111111111111"),
                             productID = "product4",
@@ -223,7 +222,7 @@ namespace BusinessObject.Migrations
                         },
                         new
                         {
-                            Id = new Guid("e0013bb4-a635-4d6b-b1bf-ab8605947b62"),
+                            Id = new Guid("c104e8d3-a59b-44f2-8cf5-da77762dbe11"),
                             note = "Note",
                             orderID = new Guid("33333333-3333-3333-3333-333333333333"),
                             productID = "product3",
@@ -231,7 +230,7 @@ namespace BusinessObject.Migrations
                         },
                         new
                         {
-                            Id = new Guid("2b4a9459-aef5-4af7-bb69-f0466e6ed23a"),
+                            Id = new Guid("8d3a8dd5-47b5-4047-bb45-edeb8a102bf0"),
                             note = "Note",
                             orderID = new Guid("33333333-3333-3333-3333-333333333333"),
                             productID = "product4",
@@ -239,7 +238,7 @@ namespace BusinessObject.Migrations
                         },
                         new
                         {
-                            Id = new Guid("040026e5-b535-47ac-9b66-a918f6845996"),
+                            Id = new Guid("9fc82cdc-e1e6-4d6a-af4b-fd0031992157"),
                             note = "Note",
                             orderID = new Guid("33333333-3333-3333-3333-333333333333"),
                             productID = "product6",
@@ -247,7 +246,7 @@ namespace BusinessObject.Migrations
                         },
                         new
                         {
-                            Id = new Guid("ad533ef6-a021-4f99-8c56-c3813012bc00"),
+                            Id = new Guid("6f6661d2-c98d-4298-a95f-582c5daaabea"),
                             note = "Note",
                             orderID = new Guid("22222222-2222-2222-2222-222222222222"),
                             productID = "product5",
@@ -255,7 +254,7 @@ namespace BusinessObject.Migrations
                         },
                         new
                         {
-                            Id = new Guid("0399ea72-a887-4607-aea5-57411e9d38da"),
+                            Id = new Guid("a0bec8d7-698c-4588-aa99-f0e683c319a7"),
                             note = "Note",
                             orderID = new Guid("22222222-2222-2222-2222-222222222222"),
                             productID = "product6",
@@ -263,7 +262,7 @@ namespace BusinessObject.Migrations
                         },
                         new
                         {
-                            Id = new Guid("8813041e-0464-4c99-9d52-74c000f27d40"),
+                            Id = new Guid("c30f7137-d737-4c4f-b931-8374a5e06443"),
                             note = "Note",
                             orderID = new Guid("22222222-2222-2222-2222-222222222222"),
                             productID = "product7",
@@ -271,7 +270,7 @@ namespace BusinessObject.Migrations
                         },
                         new
                         {
-                            Id = new Guid("e8c0e31b-9d9e-428e-82b0-044d5a8d0e9d"),
+                            Id = new Guid("9350fd7c-f0a4-42ed-a8ac-a3ec4f948428"),
                             note = "Note",
                             orderID = new Guid("22222222-2222-2222-2222-222222222222"),
                             productID = "product8",
@@ -778,6 +777,12 @@ namespace BusinessObject.Migrations
                             roleID = 3,
                             description = "Shipper",
                             roleName = "Shipper"
+                        },
+                        new
+                        {
+                            roleID = 4,
+                            description = "Manager",
+                            roleName = "Manager"
                         });
                 });
 
@@ -923,9 +928,6 @@ namespace BusinessObject.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("max")
-                        .HasColumnType("float");
-
                     b.Property<double>("min")
                         .HasColumnType("float");
 
@@ -973,9 +975,7 @@ namespace BusinessObject.Migrations
                 {
                     b.HasOne("BusinessObject.Entities.User", "Shippers")
                         .WithMany()
-                        .HasForeignKey("shipperID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("shipperID");
 
                     b.HasOne("BusinessObject.Entities.User", "Users")
                         .WithMany("Orders")

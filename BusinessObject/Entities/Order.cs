@@ -13,7 +13,7 @@ namespace BusinessObject.Entities
         [Key]
         public Guid orderID { get; set; }
         public required string userID {  get; set; }
-        public string shipperID {  get; set; }
+        public string? shipperID {  get; set; }
         public string note {  get; set; }
         public string? voucherID {  get; set; }
         public double total {  get; set; }

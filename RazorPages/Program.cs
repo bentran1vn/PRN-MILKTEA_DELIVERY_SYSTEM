@@ -7,6 +7,8 @@ using Repositories.OrderDetails;
 using Repositories.Products;
 using Repositories.SignalR;
 using Repositories.UploadFileService;
+using BusinessObject.Entities;
+using Repositories.User;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -38,6 +40,7 @@ builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IFeedBackRepository, FeedBackRepository>();
 builder.Services.AddScoped <IImageUploadService, CloudinaryImageUploadService> ();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
