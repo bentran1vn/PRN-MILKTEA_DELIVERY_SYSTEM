@@ -13,6 +13,13 @@ public class ProductRepository: IProductRepository
         var result = _dao.GetAll();
         return result.Skip((pageNum-1) * pageSize).Take(pageSize);
     }
+
+    public IEnumerable<Product> Search(string name, int pageNum, int pageSize)
+    {
+        var result = _dao.Search(name);
+        return result.Skip((pageNum-1) * pageSize).Take(pageSize);
+    }
+
     public IEnumerable<Product> GetAllDes(int pageNum, int pageSize)
     {
         var result = _dao.GetAll().OrderByDescending(x => x.CreateAt);;
@@ -70,4 +77,6 @@ public class ProductRepository: IProductRepository
     {
         return _dao.GetAll().Count();
     }
+
+    public int GetCountBySearch(string keyword) => _dao.Search(keyword).Count();    
 }

@@ -12,6 +12,9 @@ public class ProductDAO
         return _context.Products.AsNoTracking();
     }
 
+    public IEnumerable<Product> Search(string name)
+        => _context.Products.Where(x => x.ProductName.Contains(name)).AsNoTracking();
+
     public void Delete(string productId)
     {
         var product = _context.Products.FirstOrDefault(x => x.ProductID == productId);

@@ -4,7 +4,7 @@ using BusinessObject.Entities;
 public interface IProductRepository
 {
     IEnumerable<Product> GetAll(int pageNum, int pageSize);
-    
+    IEnumerable<Product> Search(string name, int pageNum, int pageSize);
     IEnumerable<Product> GetAllDes(int pageNum, int pageSize);
     IEnumerable<Product> GetAll();
     void DeleteProduct(string productId);
@@ -15,4 +15,5 @@ public interface IProductRepository
     IEnumerable<Product> GetAll6();
     IEnumerable<Product> GetAllFormSession(List<string> productIds);
     int GetCount();
+    int GetCountBySearch(string keyword);
 }

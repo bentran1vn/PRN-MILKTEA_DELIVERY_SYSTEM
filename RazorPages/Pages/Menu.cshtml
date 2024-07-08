@@ -1,4 +1,5 @@
 @page
+
 @model RazorPages.Pages.Menu
 
 @{
@@ -40,9 +41,9 @@
                         <div class="col-2"></div>
                         <!-- Search bar container occupying the remaining 10 columns -->
                         <div class="col-10 d-flex justify-content-end">
-                            <form method="get" class="d-flex w-100">
-                                <input name="searchQuery" class="form-control me-2 w-100 mr-3" type="search" placeholder="Search for products..." aria-label="Search">
-                                <button class="btn btn-outline-dark" type="submit">Search</button>
+                        <form method="get" class="d-flex w-100">
+                                <input name="keyword" class="form-control me-2 w-100 mr-3" type="search" placeholder="Search for products..." aria-label="Search" asp-for="Keyword">
+                                <input class="btn btn-outline-dark" value="Search" type="submit"/>
                             </form>
                         </div>
                     </div>
