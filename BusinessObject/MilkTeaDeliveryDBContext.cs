@@ -130,6 +130,12 @@ namespace BusinessObject
                     roleID = 3,
                     roleName = "Shipper",
                     description = "Shipper"
+                },
+                new Role()
+                {
+                    roleID = 4,
+                    roleName = "Manager",
+                    description = "Manager"
                 }
             );
             

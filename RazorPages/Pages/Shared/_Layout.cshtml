@@ -19,11 +19,11 @@
 
 </head>
 <body>
-        
+
     <header class="header_section" style="background-color : black">
         <div class="container">
             <nav class="navbar navbar-expand-lg custom_nav-container ">
-                <a class="navbar-brand" asp-page="./Index">
+                <a class="navbar-brand" asp-page="Index">
                     <span>
                         MilkTea
                     </span>
@@ -48,6 +48,7 @@
                             <a class="nav-link" asp-page="./Menu">Order</a>
                         </li>
                     </ul>
+
                     <div class="user_option">
                         <a href="" class="user_link">
                             <i class="fa fa-user" aria-hidden="true"></i>
@@ -111,9 +112,32 @@
                                 <i class="fa fa-search" aria-hidden="true"></i>
                             </button>
                         </form>
-                        <a href="" class="order_online">
-                            Login
-                        </a>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+
+                            if (User.IsInRole("2")) { }
+                            else if (User.IsInRole("3")) { }
+                            else if (User.IsInRole("4"))
+                            {
+                                <ul class="navbar-nav  mx-auto ">
+                                    <li class="nav-item active">
+                                        <a class="nav-link" asp-page="ProductManagePage">Product Management <span class="sr-only">(current)</span></a>
+                                    </li>
+                                </ul>
+
+
+                            }
+                            else if (User.IsInRole("5")) { }
+                            <a asp-page="/Account/Logout" class="order_online">
+                                Logout
+                            </a>
+                        }
+                        else
+                        {
+                            <a asp-page="/Account/Login" class="order_online">
+                                Login
+                            </a>
+                        }
                     </div>
                 </div>
             </nav>
