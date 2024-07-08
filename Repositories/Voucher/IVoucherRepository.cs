@@ -12,7 +12,7 @@ namespace Repositories.Voucher
         List<BusinessObject.Entities.Voucher> GetAll();
         List<BusinessObject.Entities.Voucher> Search(string name);
         BusinessObject.Entities.Voucher GetVoucher(string id);
-        string Add(BusinessObject.Entities.Voucher voucher);
+        Task<string> Add(BusinessObject.Entities.Voucher voucher);
         string Delete(string id);
         string Update(BusinessObject.Entities.Voucher voucher);
     }

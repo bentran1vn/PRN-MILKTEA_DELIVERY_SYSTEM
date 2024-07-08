@@ -9,7 +9,7 @@ namespace Repositories.Voucher
 {
     public class VoucherRepository : IVoucherRepository
     {
-        public string Add(BusinessObject.Entities.Voucher voucher) => new VoucherDAO().Add(voucher);
+        public async Task<string> Add(BusinessObject.Entities.Voucher voucher) => await new VoucherDAO().Add(voucher);
 
         public string Delete(string id) => new VoucherDAO().Delete(id);
 
