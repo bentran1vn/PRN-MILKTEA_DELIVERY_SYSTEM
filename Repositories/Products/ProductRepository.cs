@@ -70,4 +70,9 @@ public class ProductRepository: IProductRepository
     {
         return _dao.GetAll().Count();
     }
+
+    public Task UpdateProductQuantity(List<ProductCartModel> products)
+    {
+        return _dao.MinusQuanity(products);
+    }
 }

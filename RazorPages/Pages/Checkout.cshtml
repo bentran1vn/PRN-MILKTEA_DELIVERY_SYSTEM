@@ -1,5 +1,5 @@
 @page
-@model RazorPages.Pages.Checkout
+@model RazorPages.Pages.CheckoutModel
 
 @{
     Layout = null;
@@ -33,10 +33,10 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
                         <h1 class="card-title">Order Billing</h1>
-                        <a class="text-decoration-underline text-black " asp-page="./Cart">Back To Check Out</a>
+                        <a class="text-decoration-underline text-black " asp-page="./Cart">Back To Cart</a>
                     </div>
                     <hr>
-                    <div class="my-3">Order ID: 12312312312312231</div>
+                    <div id="nowDate" class="my-3"></div>
                     <ul class="pl-0 list-group list-group-flush border p-4">
                         @if (Model.SessionList != null && Model.SessionList.Count != 0)
                         {
@@ -67,20 +67,23 @@
                         }
                     </ul>
                     <div class="mt-4 mb-2 d-flex justify-content-end align-items-center">
-                        Ship Distance: 1000km
+                        Ship Distance:<span id="shipDistance"></span>
                     </div>
                     <div class="mb-2 d-flex justify-content-end align-items-center">
-                        Ship Cost: 100.000đ
+                        Ship Cost:<span id="shipCost"></span>
                     </div>
-                    <div class="mb-3 d-flex justify-content-end">Product Cost: @Model.Total.ToString("N0")đ</div>
+                    <div class="mb-3 d-flex justify-content-end">
+                        Product Cost: <span id="productCost"></span>
+                    </div>
                     <hr>
                     <div class="mb-3 d-flex justify-content-between align-items-center">
                         <h3>Total Bill:</h3>
-                        <h4>500000đ</h4>
+                        <h4><span id="totalBill"></span></h4>
                     </div>
                     <hr>
                     <div class="mb-3 d-flex justify-content-center">
-                        <form style="width: 100%;">
+                        <form method="post" asp-page-handler="CheckOut" style="width: 100%;">
+                            @Html.AntiForgeryToken()
                             <button class="btn btn-primary btn-block" type="submit">Submit</button>
                         </form>
                     </div>
@@ -101,7 +104,7 @@
         </div>
     </div>
 </div>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -117,8 +120,12 @@
         style: 'mapbox://styles/mapbox/streets-v11' // Map style
     });
 
-    // HTML elements to display information
     const distanceContainer = document.getElementById('distance');
+    const shipDistanceContainer = document.getElementById('shipDistance');
+    const shipCostContainer = document.getElementById('shipCost');
+    const totalBillContainer = document.getElementById('totalBill');
+    const productCostContainer = document.getElementById('productCost');
+    const nowDateContainer = document.getElementById('nowDate');
     const statusContainer = document.getElementById('status');
 
     // Success function to handle the retrieved location
@@ -183,7 +190,10 @@
                 const distance = data.routes[0].distance / 1000; // Convert to kilometers
                 distanceContainer.textContent = `Total route distance: ${distance.toFixed(2)} km`;
 
+                
+
                 // Fit the map to the route bounds
+                
                 const coordinates = route.coordinates;
                 const bounds = new mapboxgl.LngLatBounds(coordinates[0], coordinates[0]);
                 for (const coord of coordinates) {
@@ -192,28 +202,40 @@
                 map.fitBounds(bounds, {
                     padding: 50
                 });
+                calculateShippingCost(distance.toFixed(2));
             }
 
             // Get and display the route between the shop and user's location
             getRoute(marker1Coords, [longitudeUser, latitudeUser]);
         });
 
-        // Display the user's coordinates in the status container
-        statusContainer.textContent = `Latitude: ${latitudeUser.toFixed(6)}, Longitude: ${longitudeUser.toFixed(6)}`;
-
-        // Fetch the address of the user's location using the Mapbox Geocoding API
-        fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${longitudeUser},${latitudeUser}.json?access_token=${mapboxgl.accessToken}`)
-            .then(response => response.json())
-            .then(data => {
-                // Get the first result
-                const address = data.features[0].place_name;
-                // Display the address
-                document.getElementById('address').textContent = `Address: ${address}`;
+        function calculateShippingCost(distance) {
+            fetch('/Checkout?handler=CalculateShippingCost', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+                },
+                body: JSON.stringify({ distance: parseFloat(distance) })
             })
-            .catch(error => {
-                console.error('Error:', error);
-                document.getElementById('address').textContent = 'Error retrieving address';
-            });
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok ' + response.statusText);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const now = new Date();
+                    nowDateContainer.textContent = 'Order Day: ' + now.getDate() + '/' + now.getMonth() + '/' + now.getFullYear()
+                    shipDistanceContainer.textContent = + distance + 'km';
+                    shipCostContainer.textContent = parseInt(data?.shippingCost).toLocaleString('en') + 'đ';
+                    productCostContainer.textContent = parseInt(data?.productCost).toLocaleString('en') + 'đ';
+                    totalBillContainer.textContent = parseInt(data.total).toLocaleString('en') + 'đ';
+                })
+                .catch(error => {
+                    console.error('Error:', error.message);
+                });
+        }
     }
 
     // Error function to handle any issues retrieving the location

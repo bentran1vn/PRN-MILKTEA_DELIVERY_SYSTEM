@@ -72,7 +72,7 @@ namespace BusinessObject.Migrations
 
                     b.HasIndex("userID");
 
-                    b.ToTable("FeedBacks");
+                    b.ToTable("FeedBacks", (string)null);
                 });
 
             modelBuilder.Entity("BusinessObject.Entities.Order", b =>
@@ -127,7 +127,7 @@ namespace BusinessObject.Migrations
 
                     b.HasIndex("voucherID");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
 
                     b.HasData(
                         new
@@ -185,12 +185,12 @@ namespace BusinessObject.Migrations
 
                     b.HasIndex("productID");
 
-                    b.ToTable("OrderDetails");
+                    b.ToTable("OrderDetails", (string)null);
 
                     b.HasData(
                         new
                         {
-                            Id = new Guid("925ea154-72e7-43f9-8edd-42c2cab013ec"),
+                            Id = new Guid("b6201ddc-b189-4dcc-984a-2a7397218d51"),
                             note = "Note",
                             orderID = new Guid("11111111-1111-1111-1111-111111111111"),
                             productID = "product1",
@@ -198,7 +198,7 @@ namespace BusinessObject.Migrations
                         },
                         new
                         {
-                            Id = new Guid("ab695a0c-9a3a-4d72-b9b8-c9c83100c144"),
+                            Id = new Guid("380ea3e1-c660-46c7-acb4-061c7a57ce9c"),
                             note = "Note",
                             orderID = new Guid("11111111-1111-1111-1111-111111111111"),
                             productID = "product2",
@@ -206,7 +206,7 @@ namespace BusinessObject.Migrations
                         },
                         new
                         {
-                            Id = new Guid("1b9875db-2862-4db2-9147-2ab9c9aafd49"),
+                            Id = new Guid("0b978ab7-5f37-457b-b014-aeb5220c7ccf"),
                             note = "Note",
                             orderID = new Guid("11111111-1111-1111-1111-111111111111"),
                             productID = "product3",
@@ -214,7 +214,7 @@ namespace BusinessObject.Migrations
                         },
                         new
                         {
-                            Id = new Guid("54b0a392-104e-4cd5-b44c-e41e4d9ff6d9"),
+                            Id = new Guid("c8bc0c3d-b733-40af-b210-093314a5a2e8"),
                             note = "Note",
                             orderID = new Guid("11111111-1111-1111-1111-111111111111"),
                             productID = "product4",
@@ -222,7 +222,7 @@ namespace BusinessObject.Migrations
                         },
                         new
                         {
-                            Id = new Guid("c104e8d3-a59b-44f2-8cf5-da77762dbe11"),
+                            Id = new Guid("1cfec37e-e2e7-41fe-bb89-96b873ee2855"),
                             note = "Note",
                             orderID = new Guid("33333333-3333-3333-3333-333333333333"),
                             productID = "product3",
@@ -230,7 +230,7 @@ namespace BusinessObject.Migrations
                         },
                         new
                         {
-                            Id = new Guid("8d3a8dd5-47b5-4047-bb45-edeb8a102bf0"),
+                            Id = new Guid("bd997005-7876-4863-86c5-dcfa267cfc86"),
                             note = "Note",
                             orderID = new Guid("33333333-3333-3333-3333-333333333333"),
                             productID = "product4",
@@ -238,7 +238,7 @@ namespace BusinessObject.Migrations
                         },
                         new
                         {
-                            Id = new Guid("9fc82cdc-e1e6-4d6a-af4b-fd0031992157"),
+                            Id = new Guid("2bcf0756-8ae5-44e5-8f6c-2be978b5ae6c"),
                             note = "Note",
                             orderID = new Guid("33333333-3333-3333-3333-333333333333"),
                             productID = "product6",
@@ -246,7 +246,7 @@ namespace BusinessObject.Migrations
                         },
                         new
                         {
-                            Id = new Guid("6f6661d2-c98d-4298-a95f-582c5daaabea"),
+                            Id = new Guid("83e3ef5a-4a47-4885-b95c-e8088e73683c"),
                             note = "Note",
                             orderID = new Guid("22222222-2222-2222-2222-222222222222"),
                             productID = "product5",
@@ -254,7 +254,7 @@ namespace BusinessObject.Migrations
                         },
                         new
                         {
-                            Id = new Guid("a0bec8d7-698c-4588-aa99-f0e683c319a7"),
+                            Id = new Guid("56267f2a-6c75-491f-b6de-0d10566c9873"),
                             note = "Note",
                             orderID = new Guid("22222222-2222-2222-2222-222222222222"),
                             productID = "product6",
@@ -262,7 +262,7 @@ namespace BusinessObject.Migrations
                         },
                         new
                         {
-                            Id = new Guid("c30f7137-d737-4c4f-b931-8374a5e06443"),
+                            Id = new Guid("4eeaf42a-94d7-4456-87f7-6e55b732eab9"),
                             note = "Note",
                             orderID = new Guid("22222222-2222-2222-2222-222222222222"),
                             productID = "product7",
@@ -270,7 +270,7 @@ namespace BusinessObject.Migrations
                         },
                         new
                         {
-                            Id = new Guid("9350fd7c-f0a4-42ed-a8ac-a3ec4f948428"),
+                            Id = new Guid("cf9f2a15-ee15-46a2-9c97-bd438d48432e"),
                             note = "Note",
                             orderID = new Guid("22222222-2222-2222-2222-222222222222"),
                             productID = "product8",
@@ -327,7 +327,7 @@ namespace BusinessObject.Migrations
 
                     b.HasKey("ProductID");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
 
                     b.HasData(
                         new
@@ -698,7 +698,7 @@ namespace BusinessObject.Migrations
 
                     b.HasKey("rankID");
 
-                    b.ToTable("Ranks");
+                    b.ToTable("Ranks", (string)null);
 
                     b.HasData(
                         new
@@ -757,7 +757,7 @@ namespace BusinessObject.Migrations
 
                     b.HasKey("roleID");
 
-                    b.ToTable("Roles");
+                    b.ToTable("Roles", (string)null);
 
                     b.HasData(
                         new
@@ -847,7 +847,7 @@ namespace BusinessObject.Migrations
 
                     b.HasIndex("roleID");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
 
                     b.HasData(
                         new
@@ -949,7 +949,7 @@ namespace BusinessObject.Migrations
 
                     b.HasKey("voucherID");
 
-                    b.ToTable("Vouchers");
+                    b.ToTable("Vouchers", (string)null);
                 });
 
             modelBuilder.Entity("BusinessObject.Entities.FeedBack", b =>

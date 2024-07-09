@@ -1,20 +1,29 @@
+using System.Text;
 using BusinessObject.Entities;
+using DataAccessObject.Products;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using RazorPages.Utils;
+using Repositories.OrderDetails;
+using Repositories.Orders;
 using Repositories.Products;
+using Repositories.SignalR;
 
 namespace RazorPages.Pages;
 
-public class Checkout(IProductRepository productRepository,
+public class CheckoutModel(
+    IProductRepository productRepository,
+    IOrderRepository orderRepository,
+    IOrderDetailsRepository orderDetailRepository,
+    IHubContext<SignalrServer> hubContext,
     IHttpContextAccessor httpContextAccessor) : PageModel
 {
     [BindProperty] public IList<Product> CartListModel { get; set; }
     
     [BindProperty] public IList<ProductCartModel>? SessionList { get; set; }
-    
-    [BindProperty] public double Total { get; set; } = 0;
     public void OnGet()
     {
         var idInSession = httpContextAccessor.HttpContext?.Session?.GetList<ProductCartModel>("Cart")?.Select(x => x.ProductId);
@@ -26,17 +35,98 @@ public class Checkout(IProductRepository productRepository,
         {
             CartListModel = result;
         }
-        Total = GetTotalPrice();
     }
     
     public double GetTotalPrice()
     {
         double result = 0;
-        if (SessionList == null) return result;
-        foreach (var item in SessionList)
+        var idInSession = httpContextAccessor.HttpContext?.Session?.GetList<ProductCartModel>("Cart")?.Select(x => x.ProductId);
+        var inSession = idInSession?.ToList();
+        var productList = productRepository.GetAllFormSession(inSession!.ToList()).ToList();
+        var productSessionList = httpContextAccessor.HttpContext?.Session?.GetList<ProductCartModel>("Cart").ToList();
+        foreach (var item in productSessionList)
         {
-            result += CartListModel.FirstOrDefault(x => x.ProductID.Equals(item.ProductId))!.Price * item.Quantity;
+            result += productList.FirstOrDefault(x => x.ProductID.Equals(item.ProductId))!.Price * item.Quantity;
         }
         return result;
     }
+    
+    public async Task<IActionResult> OnPostCheckOut()
+    {
+        var now = DateTime.Now;
+        var orderIdGuid = Guid.NewGuid();
+        var order = new Order()
+        {
+            userID = "123123",
+            total = TotalMoney,
+            orderID = orderIdGuid,
+            status = 0,
+            create_At = now,
+            note = "Order Note"
+        };
+        await orderRepository.Add(order);
+        List<OrderDetail> orderDetailList = new List<OrderDetail>();
+        var sessionCartModels = httpContextAccessor.HttpContext?.Session?.GetList<ProductCartModel>("Cart").ToList();
+        foreach (var item in sessionCartModels)
+        {
+            orderDetailList.Add(new OrderDetail()
+            {
+                orderID = orderIdGuid,
+                quantity = item.Quantity,
+                productID = item.ProductId,
+                note = "Note"
+            });
+        }
+        await orderDetailRepository.AddOrderDetails(orderDetailList);
+        await productRepository.UpdateProductQuantity(sessionCartModels);
+        // await hubContext.Clients.All.SendAsync("NewOrder", new OderHistoryModel
+        // {
+        //     OrderId = orderIdGuid.ToString(),
+        //     User_Name = "NguoiMua",
+        //     NumOfProduct = sessionCartModels.ToList().Count,
+        //     Total = TotalMoney,
+        //     Create_At = now,
+        //     ShipperName = "NguoiBan"
+        // });
+        httpContextAccessor.HttpContext?.Session?.SetList("Cart", new List<ProductCartModel>());
+        return RedirectToPage("./Menu");
+    }
+
+    
+    public IActionResult OnPostCalculateShippingCost([FromBody] DistanceRequest request)
+    {
+        double distance = request.Distance;
+        double shippingCost = CalculateShippingCost(distance);
+        double productCost = GetTotalPrice();
+        TotalMoney = shippingCost + productCost;
+        return new JsonResult(new { shippingCost = shippingCost, productCost = productCost, total = TotalMoney });
+    }
+
+    private double CalculateShippingCost(double distance)
+    {
+        // Implement your shipping cost calculation logic here
+        // For example, $5 base cost + $1 per km
+        return 10000 * (distance * 1);
+    }
+    
+    public double TotalMoney
+    {
+        get
+        {
+            if (HttpContext.Session.TryGetValue("TotalMoney", out byte[] value))
+            {
+                return JsonConvert.DeserializeObject<double>(Encoding.UTF8.GetString(value));
+            }
+            return 0;
+        }
+        set
+        {
+            HttpContext.Session.Set("TotalMoney", Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(value)));
+        }
+    }
+}
+
+public class DistanceRequest
+{
+    public double Distance { get; set; }
 }
