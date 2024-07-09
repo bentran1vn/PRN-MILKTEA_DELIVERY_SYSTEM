@@ -1,3 +1,5 @@
+using DataAccessObject.Products;
+
 namespace Repositories.Products;
 using BusinessObject.Entities;
 
@@ -15,4 +17,5 @@ public interface IProductRepository
     IEnumerable<Product> GetAll6();
     IEnumerable<Product> GetAllFormSession(List<string> productIds);
     int GetCount();
+    Task UpdateProductQuantity(List<ProductCartModel> products);
 }

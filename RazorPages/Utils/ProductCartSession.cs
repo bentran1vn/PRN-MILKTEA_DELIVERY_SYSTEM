@@ -1,3 +1,5 @@
+using DataAccessObject.Products;
+
 namespace RazorPages.Utils;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
@@ -59,10 +61,4 @@ public static class ProductCartSession
             }
         }
     }
-}
-
-public class ProductCartModel
-{
-    public string ProductId { get; set; } = null!;
-    public int Quantity { get; set; } = 1;
 }

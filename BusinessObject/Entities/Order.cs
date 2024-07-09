@@ -23,7 +23,7 @@ namespace BusinessObject.Entities
         public DateTime? create_At { get; set; }
         public DateTime? update_At { get; set; }
         public DateTime? delete_At { get; set; }
-        public int status { get; set; }
+        public int status { get; set; } // 0 pending 1 finish
 
         [ForeignKey(nameof(voucherID))]
         public virtual Voucher? Vouchers { get; set; }

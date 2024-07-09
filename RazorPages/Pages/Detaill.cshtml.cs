@@ -1,5 +1,6 @@
 using System.Collections;
 using BusinessObject.Entities;
+using DataAccessObject.Products;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using RazorPages.Utils;
