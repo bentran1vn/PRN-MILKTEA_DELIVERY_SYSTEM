@@ -62,7 +62,10 @@ public class CheckoutModel(
             orderID = orderIdGuid,
             status = 0,
             create_At = now,
-            note = "Order Note"
+            note = "Order Note",
+            kinhdo = Kinhdo,
+            vido = ViDo,
+            address = Address
         };
         await orderRepository.Add(order);
         List<OrderDetail> orderDetailList = new List<OrderDetail>();
@@ -99,6 +102,9 @@ public class CheckoutModel(
         double shippingCost = CalculateShippingCost(distance);
         double productCost = GetTotalPrice();
         TotalMoney = shippingCost + productCost;
+        Kinhdo = request.KinhDo;
+        ViDo = request.ViDo;
+        Address = request.AddressUser;
         return new JsonResult(new { shippingCost = shippingCost, productCost = productCost, total = TotalMoney });
     }
 
@@ -124,9 +130,61 @@ public class CheckoutModel(
             HttpContext.Session.Set("TotalMoney", Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(value)));
         }
     }
+    
+    public string Kinhdo
+    {
+        get
+        {
+            if (HttpContext.Session.TryGetValue("Kinhdo", out byte[] value))
+            {
+                return Encoding.UTF8.GetString(value);
+            }
+            return string.Empty;
+        }
+        set
+        {
+            HttpContext.Session.Set("Kinhdo", Encoding.UTF8.GetBytes(value));
+        }
+    }
+    
+    public string ViDo
+    {
+        get
+        {
+            if (HttpContext.Session.TryGetValue("ViDo", out byte[] value))
+            {
+                return Encoding.UTF8.GetString(value);
+            }
+            return string.Empty;
+        }
+        set
+        {
+            HttpContext.Session.Set("ViDo", Encoding.UTF8.GetBytes(value));
+        }
+    }
+    
+    public string Address
+    {
+        get
+        {
+            if (HttpContext.Session.TryGetValue("Address", out byte[] value))
+            {
+                return Encoding.UTF8.GetString(value);
+            }
+            return string.Empty;
+        }
+        set
+        {
+            HttpContext.Session.Set("Address", Encoding.UTF8.GetBytes(value));
+        }
+    }
 }
 
 public class DistanceRequest
 {
     public double Distance { get; set; }
+    public string KinhDo { get; set; }
+    public string ViDo { get; set; }
+    
+    public string AddressUser { get; set; }
 }

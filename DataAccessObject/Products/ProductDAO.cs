@@ -43,6 +43,7 @@ public class ProductDAO
         var productIdsToUpdate = products.Select(p => p.ProductId).ToList();
 
         var productsToUpdate = await _context.Products
+            .AsNoTracking()
             .Where(p => productIdsToUpdate.Contains(p.ProductID))
             .ToListAsync();
         foreach (var item in productsToUpdate)

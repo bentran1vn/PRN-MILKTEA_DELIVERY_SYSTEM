@@ -21,6 +21,18 @@
         .map-container {
             height: 400px; /* Adjust map height as needed */
         }
+        .progress-bar {
+            width: 100%;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .progress-bar-fill {
+            height: 20px;
+            background-color: #007bff;
+            width: 0;
+            transition: width 0.3s;
+        }
     </style>
 </head>
 <body>
@@ -96,10 +108,14 @@
                     <div class="map-container">
                         <div id="map"></div>
                         <div id="distance">Total distance: 0 km</div>
-                        @* <div id="status">Latitude: 0.000000, Longitude: 0.000000</div> *@
-                        @* <div id="address">Address: Loading...</div> *@
                     </div>
                 </div>
+            </div>
+            <div class="progress-bar-container mt-3">
+                <div class="progress-bar">
+                    <div id="progressBarFill" class="progress-bar-fill"></div>
+                </div>
+                <div id="progressStatus" class="text-center mt-2"></div>
             </div>
         </div>
     </div>
@@ -202,21 +218,22 @@
                 map.fitBounds(bounds, {
                     padding: 50
                 });
-                calculateShippingCost(distance.toFixed(2));
+                const addressUser = await getUserAddress(longitudeUser, latitudeUser)
+                calculateShippingCost(distance.toFixed(2), longitudeUser, latitudeUser, addressUser);
             }
 
             // Get and display the route between the shop and user's location
             getRoute(marker1Coords, [longitudeUser, latitudeUser]);
         });
 
-        function calculateShippingCost(distance) {
+        function calculateShippingCost(distance, kinhdo, vido, addressUser) {
             fetch('/Checkout?handler=CalculateShippingCost', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
                 },
-                body: JSON.stringify({ distance: parseFloat(distance) })
+                body: JSON.stringify({ distance: parseFloat(distance), kinhdo: kinhdo.toLocaleString(), vido: vido.toLocaleString(), addressUser: addressUser.toLocaleString() })
             })
                 .then(response => {
                     if (!response.ok) {
@@ -235,6 +252,23 @@
                 .catch(error => {
                     console.error('Error:', error.message);
                 });
+        }
+
+        async function getUserAddress(longitude, latitude) {
+            const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${longitude},${latitude}.json?access_token=${mapboxgl.accessToken}`;
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                const place = data.features[0];
+                if (place) {
+                    return place.place_name;
+                } else {
+                    return 'Address not found';
+                }
+            } catch (error) {
+                console.error('Error fetching address:', error);
+                return 'Error fetching address';
+            }
         }
     }
 

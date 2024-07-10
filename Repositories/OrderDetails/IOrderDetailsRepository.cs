@@ -10,6 +10,9 @@ namespace Repositories.OrderDetails
     public interface IOrderDetailsRepository
     {
         Task AddOrderDetails(IEnumerable<OrderDetail> orderDetails);
+
+        IEnumerable<OrderDetail> GetOrderDetailByOrderId(string? id);
+
     }
 };
 
