@@ -16,6 +16,12 @@ namespace BusinessObject.Entities
         public string? shipperID {  get; set; }
         public string note {  get; set; }
         public string? voucherID {  get; set; }
+
+        public string? kinhdo { get; set; }
+        
+        public string? vido { get; set; }
+        
+        public string? address { get; set; }
         public double total {  get; set; }
         public string? create_By { get; set; }
         public string? update_By { get; set; }
@@ -23,7 +29,7 @@ namespace BusinessObject.Entities
         public DateTime? create_At { get; set; }
         public DateTime? update_At { get; set; }
         public DateTime? delete_At { get; set; }
-        public int status { get; set; } // 0 pending 1 finish
+        public int status { get; set; } // 0 pending 1 isTaked 2 Finish
 
         [ForeignKey(nameof(voucherID))]
         public virtual Voucher? Vouchers { get; set; }

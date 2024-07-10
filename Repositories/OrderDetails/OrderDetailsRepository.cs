@@ -15,4 +15,9 @@ public class OrderDetailsRepository : IOrderDetailsRepository
     {
         await _dao.AddOrderDetails(orderDetails);
     }
+
+    public IEnumerable<OrderDetail> GetOrderDetailByOrderId(string? id)
+    {
+        return _dao.GetOrderDetailByOrderId(id);
+    }
 }
