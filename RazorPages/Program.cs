@@ -9,7 +9,7 @@ using Repositories.SignalR;
 using Repositories.UploadFileService;
 using Repositories.Voucher;
 using BusinessObject.Entities;
-using Repositories.User;
+using Repositories.Users;
 
 
 var builder = WebApplication.CreateBuilder(args);
