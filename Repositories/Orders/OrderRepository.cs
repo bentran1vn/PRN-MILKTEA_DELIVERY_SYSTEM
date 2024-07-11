@@ -11,5 +11,20 @@ namespace Repositories.Orders
         {
             await _dao.AddOrder(order);
         }
+
+        public IEnumerable<Order> GetAllOrder(int? status)
+        {
+            return  _dao.GetAllOrder(status).OrderBy(o => o.create_At);
+        }
+
+        public Order GetOrderById(string id)
+        {
+            return _dao.GetOrder(id);
+        }
+
+        public void UpdateOrder(Guid id, int status)
+        { 
+            _dao.UpdateOrder(id, status);
+        }
     }
 }

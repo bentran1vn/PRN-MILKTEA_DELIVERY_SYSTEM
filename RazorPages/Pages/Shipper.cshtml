@@ -1,0 +1,70 @@
+@page
+@model RazorPages.Pages.Shipper
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shipping Orders</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .order-list {
+            margin-top: 20px;
+        }
+        .order-item {
+            border: 1px solid #dee2e6;
+            border-radius: 0.25rem;
+            padding: 15px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .order-details {
+            flex-grow: 1;
+        }
+        .order-actions {
+            display: flex;
+            flex-direction: column;
+        }
+        .order-actions .btn {
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1 class="text-center my-4">Shipping Orders</h1>
+    <div class="order-list">
+        @foreach (var item in Model.Orders)
+        {
+            <div class="order-item">
+                <div class="order-details">
+                    <p><strong>Order ID:</strong> @item.orderID</p>
+                    <p><strong>User Name:</strong> @item.Users.userName</p>
+                    <p><strong>Address:</strong> @item.address</p>
+                    <p><strong>Total Price:</strong> @String.Format("{0:n0}đ", item.total)</p>
+                </div>
+                <div class="order-actions">
+                    <form method="post" asp-page-handler="HandlerTake">
+                        <input value=@item.orderID asp-for="OrderId" type="hidden">
+                        <button class="btn btn-success">Take</button>
+                    </form>
+                    <a asp-route-id='@item.orderID' asp-page="./ShipperOrderDetail" class="btn btn-primary">Detail</a>
+                </div>
+            </div>
+        }
+        
+        <!-- Add more orders as needed -->
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+

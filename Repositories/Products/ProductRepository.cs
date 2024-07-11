@@ -101,4 +101,8 @@ public class ProductRepository : IProductRepository
 
     public int GetCountBySearch(string keyword) => _dao.Search(keyword).Count();
     public int GetCountByFilter(IList<Product> products, List<string> type, string priceOption) => _dao.Filter(products, type, priceOption).Count();
+    public Task UpdateProductQuantity(List<ProductCartModel> products)
+    {
+        return _dao.MinusQuanity(products);
+    }
 }

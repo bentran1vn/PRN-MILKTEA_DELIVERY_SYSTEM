@@ -2,6 +2,7 @@ using BusinessObject;
 using BusinessObject.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using Z.EntityFramework.Extensions;
 
 namespace DataAccessObject.Products;
 
@@ -64,8 +65,26 @@ public class ProductDAO
         return _context.Products.AsNoTracking().FirstOrDefault(x => x.ProductID.Equals(productId));
     }
 
-    public object GetAllDesc()
+    public async Task MinusQuanity(List<ProductCartModel> products)
     {
-        throw new NotImplementedException();
+        var productIdsToUpdate = products.Select(p => p.ProductId).ToList();
+
+        var productsToUpdate = await _context.Products
+            .AsNoTracking()
+            .Where(p => productIdsToUpdate.Contains(p.ProductID))
+            .ToListAsync();
+        foreach (var item in productsToUpdate)
+        {
+            item.Quantity -= products.FirstOrDefault(x => x.ProductId.Equals(item.ProductID))!.Quantity;
+        }
+        
+        _context.Products.UpdateRange(productsToUpdate);
+        await _context.SaveChangesAsync();
     }
+}
+
+public class ProductCartModel
+{
+    public string ProductId { get; set; } = null!;
+    public int Quantity { get; set; } = 1;
 }

@@ -1,3 +1,5 @@
+using DataAccessObject.Products;
+
 namespace Repositories.Products;
 using BusinessObject.Entities;
 
@@ -20,4 +22,5 @@ public interface IProductRepository
     int GetCount();
     int GetCountBySearch(string keyword);
     int GetCountByFilter(IList<Product> products, List<string> type, string priceOption);
+    Task UpdateProductQuantity(List<ProductCartModel> products);
 }
