@@ -4,26 +4,47 @@ using DataAccessObject.Products;
 namespace Repositories.Products;
 
 
-public class ProductRepository: IProductRepository
+public class ProductRepository : IProductRepository
 {
     private readonly ProductDAO _dao = new();
 
     public IEnumerable<Product> GetAll(int pageNum, int pageSize)
     {
         var result = _dao.GetAll();
-        return result.Skip((pageNum-1) * pageSize).Take(pageSize);
+        return result.Skip((pageNum - 1) * pageSize).Take(pageSize);
     }
 
     public IEnumerable<Product> Search(string name, int pageNum, int pageSize)
     {
-        var result = _dao.Search(name);
-        return result.Skip((pageNum-1) * pageSize).Take(pageSize);
+        IEnumerable<Product> result;
+        if (name == null)
+            result = _dao.GetAll();
+        else
+            result = _dao.Search(name);
+        return result.Skip((pageNum - 1) * pageSize).Take(pageSize);
+    }
+    public IEnumerable<Product> Search(string name)
+    {
+        IEnumerable<Product> result;
+        if (name == null)
+            result = _dao.GetAll();
+        else
+            result = _dao.Search(name);
+        return result;
+    }
+    public IEnumerable<Product> Pagination(IList<Product> list, int pageNum, int pageSize)
+        =>  list.Skip((pageNum - 1) * pageSize).Take(pageSize);
+
+    public IEnumerable<Product> Filter(IList<Product> products, List<string> type, string priceOption)
+    {
+        var result = _dao.Filter(products, type, priceOption);
+        return result;
     }
 
     public IEnumerable<Product> GetAllDes(int pageNum, int pageSize)
     {
-        var result = _dao.GetAll().OrderByDescending(x => x.CreateAt);;
-        return result.Skip((pageNum-1) * pageSize).Take(pageSize);
+        var result = _dao.GetAll().OrderByDescending(x => x.CreateAt);
+        return result.Skip((pageNum - 1) * pageSize).Take(pageSize);
     }
 
     public IEnumerable<Product> GetAll()
@@ -78,5 +99,6 @@ public class ProductRepository: IProductRepository
         return _dao.GetAll().Count();
     }
 
-    public int GetCountBySearch(string keyword) => _dao.Search(keyword).Count();    
+    public int GetCountBySearch(string keyword) => _dao.Search(keyword).Count();
+    public int GetCountByFilter(IList<Product> products, List<string> type, string priceOption) => _dao.Filter(products, type, priceOption).Count();
 }
