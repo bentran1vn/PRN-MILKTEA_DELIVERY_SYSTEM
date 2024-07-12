@@ -20,4 +20,9 @@ public class OrderDetailsRepository : IOrderDetailsRepository
     {
         return _dao.GetOrderDetailByOrderId(id);
     }
+
+    public IEnumerable<Guid> GetOrderDetailIDsFromOrderID(string orderID)
+    {
+       return _dao.GetOrderDetailIDsFromOrderID(orderID);
+    }
 }

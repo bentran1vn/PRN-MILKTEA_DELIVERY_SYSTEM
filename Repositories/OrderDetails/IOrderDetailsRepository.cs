@@ -13,6 +13,8 @@ namespace Repositories.OrderDetails
 
         IEnumerable<OrderDetail> GetOrderDetailByOrderId(string? id);
 
+        IEnumerable<Guid> GetOrderDetailIDsFromOrderID(string orderID);
+
     }
 };
 

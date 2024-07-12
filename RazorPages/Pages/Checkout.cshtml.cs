@@ -1,6 +1,7 @@
 using System.Text;
 using BusinessObject.Entities;
 using DataAccessObject.Products;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.SignalR;
@@ -14,6 +15,7 @@ using Repositories.SignalR;
 
 namespace RazorPages.Pages;
 
+[Authorize]
 public class CheckoutModel(
     IProductRepository productRepository,
     IOrderRepository orderRepository,
@@ -22,10 +24,14 @@ public class CheckoutModel(
     IHttpContextAccessor httpContextAccessor) : PageModel
 {
     [BindProperty] public IList<Product> CartListModel { get; set; }
-    
+
     [BindProperty] public IList<ProductCartModel>? SessionList { get; set; }
     public void OnGet()
     {
+
+
+
+
         var idInSession = httpContextAccessor.HttpContext?.Session?.GetList<ProductCartModel>("Cart")?.Select(x => x.ProductId);
         var inSession = idInSession?.ToList();
         if (inSession.IsNullOrEmpty()) return;
@@ -36,7 +42,7 @@ public class CheckoutModel(
             CartListModel = result;
         }
     }
-    
+
     public double GetTotalPrice()
     {
         double result = 0;
@@ -50,14 +56,14 @@ public class CheckoutModel(
         }
         return result;
     }
-    
+
     public async Task<IActionResult> OnPostCheckOut()
     {
         var now = DateTime.Now;
         var orderIdGuid = Guid.NewGuid();
         var order = new Order()
         {
-            userID = "123123",
+            userID = User.Claims.FirstOrDefault(claim => claim.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier").Value,
             total = TotalMoney,
             orderID = orderIdGuid,
             status = 0,
@@ -95,7 +101,7 @@ public class CheckoutModel(
         return RedirectToPage("./Menu");
     }
 
-    
+
     public IActionResult OnPostCalculateShippingCost([FromBody] DistanceRequest request)
     {
         double distance = request.Distance;
@@ -114,7 +120,7 @@ public class CheckoutModel(
         // For example, $5 base cost + $1 per km
         return 10000 * (distance * 1);
     }
-    
+
     public double TotalMoney
     {
         get
@@ -130,7 +136,7 @@ public class CheckoutModel(
             HttpContext.Session.Set("TotalMoney", Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(value)));
         }
     }
-    
+
     public string Kinhdo
     {
         get
@@ -146,7 +152,7 @@ public class CheckoutModel(
             HttpContext.Session.Set("Kinhdo", Encoding.UTF8.GetBytes(value));
         }
     }
-    
+
     public string ViDo
     {
         get
@@ -162,7 +168,7 @@ public class CheckoutModel(
             HttpContext.Session.Set("ViDo", Encoding.UTF8.GetBytes(value));
         }
     }
-    
+
     public string Address
     {
         get
@@ -185,6 +191,6 @@ public class DistanceRequest
     public double Distance { get; set; }
     public string KinhDo { get; set; }
     public string ViDo { get; set; }
-    
+
     public string AddressUser { get; set; }
 }

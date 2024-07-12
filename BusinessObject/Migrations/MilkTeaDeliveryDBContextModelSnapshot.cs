@@ -199,7 +199,7 @@ namespace BusinessObject.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("a67867a1-ad89-40a1-bc7d-85b5223f9dcf"),
+                            Id = new Guid("169232b4-84ea-48a9-af65-c92912bd1f3b"),
                             note = "Note",
                             orderID = new Guid("11111111-1111-1111-1111-111111111111"),
                             productID = "product1",
@@ -207,7 +207,7 @@ namespace BusinessObject.Migrations
                         },
                         new
                         {
-                            Id = new Guid("63baccd0-a93f-4ee5-9b80-a3dc5d9f53f3"),
+                            Id = new Guid("2307493a-fbc1-4006-a99f-90df3c2a01e5"),
                             note = "Note",
                             orderID = new Guid("11111111-1111-1111-1111-111111111111"),
                             productID = "product2",
@@ -215,7 +215,7 @@ namespace BusinessObject.Migrations
                         },
                         new
                         {
-                            Id = new Guid("f824cef9-16c7-49d0-9d81-48d563f43ed2"),
+                            Id = new Guid("32320d86-2cc8-44e7-b604-71fded18702e"),
                             note = "Note",
                             orderID = new Guid("11111111-1111-1111-1111-111111111111"),
                             productID = "product3",
@@ -223,7 +223,7 @@ namespace BusinessObject.Migrations
                         },
                         new
                         {
-                            Id = new Guid("a442b481-9cb6-4ac2-b91e-59f9ccb2bb52"),
+                            Id = new Guid("0233938e-6827-4665-84ca-b633171f9002"),
                             note = "Note",
                             orderID = new Guid("11111111-1111-1111-1111-111111111111"),
                             productID = "product4",
@@ -231,7 +231,7 @@ namespace BusinessObject.Migrations
                         },
                         new
                         {
-                            Id = new Guid("aa1aa746-d085-4e26-a02a-a7c6566d1b0d"),
+                            Id = new Guid("af15979d-32d5-4eb5-9862-9f014c74540c"),
                             note = "Note",
                             orderID = new Guid("33333333-3333-3333-3333-333333333333"),
                             productID = "product3",
@@ -239,7 +239,7 @@ namespace BusinessObject.Migrations
                         },
                         new
                         {
-                            Id = new Guid("95bc6026-2b61-4aba-9b8e-57ab7939dd8f"),
+                            Id = new Guid("bd30df34-677f-420d-9804-ee9fb4520114"),
                             note = "Note",
                             orderID = new Guid("33333333-3333-3333-3333-333333333333"),
                             productID = "product4",
@@ -247,7 +247,7 @@ namespace BusinessObject.Migrations
                         },
                         new
                         {
-                            Id = new Guid("c69a38e2-be03-45fd-946b-e8369ea9fcb0"),
+                            Id = new Guid("5fdffde9-a280-4a63-83e4-426aebad648e"),
                             note = "Note",
                             orderID = new Guid("33333333-3333-3333-3333-333333333333"),
                             productID = "product6",
@@ -255,7 +255,7 @@ namespace BusinessObject.Migrations
                         },
                         new
                         {
-                            Id = new Guid("bcd87b71-0534-4959-8613-ade994018278"),
+                            Id = new Guid("18134720-1026-4ce5-a41e-d64a806ed8d5"),
                             note = "Note",
                             orderID = new Guid("22222222-2222-2222-2222-222222222222"),
                             productID = "product5",
@@ -263,7 +263,7 @@ namespace BusinessObject.Migrations
                         },
                         new
                         {
-                            Id = new Guid("cf46e171-9b37-41fd-98e6-09100ffae8d8"),
+                            Id = new Guid("d74901ae-80b6-4b3a-b3ce-868c1fe1fa03"),
                             note = "Note",
                             orderID = new Guid("22222222-2222-2222-2222-222222222222"),
                             productID = "product6",
@@ -271,7 +271,7 @@ namespace BusinessObject.Migrations
                         },
                         new
                         {
-                            Id = new Guid("f91ae533-c48b-4207-a0b1-368ff0919511"),
+                            Id = new Guid("ef15e913-425a-43d9-8da3-7ba5f86cccdb"),
                             note = "Note",
                             orderID = new Guid("22222222-2222-2222-2222-222222222222"),
                             productID = "product7",
@@ -279,7 +279,7 @@ namespace BusinessObject.Migrations
                         },
                         new
                         {
-                            Id = new Guid("ae132581-ab44-40ee-84e6-7e8bd1a17840"),
+                            Id = new Guid("7d5f3729-234b-4ac6-90c1-1efa6307235c"),
                             note = "Note",
                             orderID = new Guid("22222222-2222-2222-2222-222222222222"),
                             productID = "product8",

@@ -10,33 +10,48 @@ using Repositories.User;
 namespace RazorPages.Pages.Account
 {
     [AllowAnonymous]
-    public class LoginModel(IUserRepository userRepository) : PageModel
-    {
-        private readonly IUserRepository _userRepository = userRepository;
-
-        [TempData]
-        public string Message { get; set; }
-
-        [BindProperty]
-        public User Input { get; set; }
-        public void OnGet()
+        public class LoginModel(IUserRepository userRepository) : PageModel
         {
-        }
+            private readonly IUserRepository _userRepository = userRepository;
 
-        public async Task<IActionResult> OnPostAsync()
-        {
-            var user = await _userRepository.Login(Input.userName, Input.password);
-            if (user != null)
+            [TempData]
+            public string Message { get; set; }
+
+            [BindProperty]
+            public User Input { get; set; }
+            public string returnUrl { get; set; }
+            public void OnGet(string returnUrl =null)
             {
-                AddRoleClaim(user.roleID, user.userID);
-                return RedirectToPage("/Index");
+                this.returnUrl = returnUrl;
             }
-            else
+
+            public async Task<IActionResult> OnPostAsync(string returnUrl = null)
             {
-                Message = "Invalid username or password";
-                return Page();
+                // Capture the returnUrl from the query string
+                returnUrl = returnUrl ?? Url.Content("~/");
+
+                var user = await _userRepository.Login(Input.userName, Input.password);
+                if (user != null)
+                {
+                    AddRoleClaim(user.roleID, user.userID);
+
+                    // Redirect to the ReturnUrl if it exists
+                    if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+                    {
+                        return Redirect(returnUrl);
+                    }
+                    else
+                    {
+                        return RedirectToPage("/Index");
+                    }
+                }
+                else
+                {
+                    Message = "Invalid username or password";
+                    return Page();
+                }
             }
-        }
+
 
         private void AddRoleClaim(int role, string userID)
         {
