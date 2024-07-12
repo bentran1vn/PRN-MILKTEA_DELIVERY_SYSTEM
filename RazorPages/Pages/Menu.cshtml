@@ -1,4 +1,5 @@
 @page
+
 @model RazorPages.Pages.Menu
 
 @{
@@ -7,65 +8,66 @@
 
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>Shop Homepage - Start Bootstrap Template</title>
-        <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-        <!-- Bootstrap icons-->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
-        <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="css/styles.css" rel="stylesheet" />
-    </head>
-    <body>
-        <!-- Header-->
-        <header class="bg-dark py-5">
-            <div class="container px-4 px-lg-5 my-5">
-                <div class="text-center text-white">
-                    <h1 class="display-4 fw-bolder">Meo Tea Drink Smile hihi</h1>
-                    <p class="lead fw-normal text-white-50 mb-0">1 Drink per Day good for your health</p>
-                </div>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Shop Homepage - Start Bootstrap Template</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="css/styles.css" rel="stylesheet" />
+</head>
+<body>
+    <!-- Header-->
+    <header class="bg-dark py-5">
+        <div class="container px-4 px-lg-5 my-5">
+            <div class="text-center text-white">
+                <h1 class="display-4 fw-bolder">Meo Tea Drink Smile hihi</h1>
+                <p class="lead fw-normal text-white-50 mb-0">1 Drink per Day good for your health</p>
             </div>
-        </header>
-        <!-- Section-->
-        <section class="py-2">
-            <div class="container px-4 px-lg-5 mt-5">
-                <!-- Search Bar -->
-                <div class="row mb-4">
-                    <div class="col-12 d-flex">
-                        <!-- Empty space to the left -->
-                        <div class="col-2"></div>
-                        <!-- Search bar container occupying the remaining 10 columns -->
-                        <div class="col-10 d-flex justify-content-end">
-                            <form method="get" class="d-flex w-100">
-                                <input name="searchQuery" class="form-control me-2 w-100 mr-3" type="search" placeholder="Search for products..." aria-label="Search">
-                                <button class="btn btn-outline-dark" type="submit">Search</button>
-                            </form>
-                        </div>
+        </div>
+    </header>
+    <!-- Section-->
+    <section class="py-2">
+        <div class="container px-4 px-lg-5 mt-5">
+            <!-- Search Bar -->
+            <div class="row mb-4">
+                <div class="col-12 d-flex">
+                    <!-- Empty space to the left -->
+                    <div class="col-2"></div>
+                    <!-- Search bar container occupying the remaining 10 columns -->
+                    <div class="col-10 d-flex justify-content-end">
+                        <form method="get" class="d-flex w-100">
+                            <input name="keyword" class="form-control me-2 w-100 mr-3" type="search" placeholder="Search for products..." aria-label="Search" asp-for="Keyword">
+                            <input class="btn btn-outline-dark" value="Search" type="submit" />
+                        </form>
                     </div>
                 </div>
-                <div class="row gx-4 gx-lg-5 justify-content-center">
-                    <!-- Filter Section -->
-                    <div class="col-lg-2 mb-5">
-                        <div class="card">
-                            <div class="card-header">
-                                <h5 class="fw-bolder">Filters</h5>
-                            </div>
+            </div>
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <!-- Filter Section -->
+                <div class="col-lg-2 mb-5">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="fw-bolder">Filters</h5>
+                        </div>
+                        <form method="get">
                             <div class="card-body">
                                 <!-- Filter by Category -->
                                 <div class="mb-3">
                                     <h6>Category</h6>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="filterCategory1">
+                                        <input name="category" class="form-check-input" type="checkbox" value="1" id="filterCategory1">
                                         <label class="form-check-label" for="filterCategory1">
                                             Hot
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="filterCategory2">
+                                        <input name="category" class="form-check-input" type="checkbox" value="0" id="filterCategory2">
                                         <label class="form-check-label" for="filterCategory2">
                                             Cold
                                         </label>
@@ -78,76 +80,77 @@
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="priceFilter" value="1" id="price1">
                                         <label class="form-check-label" for="price1">
-                                            $0 - $50
+                                            Ascending
                                         </label>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="priceFilter" value="2" id="price2">
                                         <label class="form-check-label" for="price2">
-                                            $50 - $100
+                                            Descending
                                         </label>
                                     </div>
                                     <!-- Add more price ranges as needed -->
                                 </div>
                                 <!-- Apply Filters Button -->
-                                <button type="button" class="btn btn-dark text-sm">Apply</button>
+                                <button type="submit" class="btn btn-dark text-sm">Apply</button>
                             </div>
-                        </div>
+                        </form>
                     </div>
-                    <!-- Product List Section -->
-                    <div class="col-10">
-                        <div class="row justify-content-center gx-4 gx-lg-5">
-                            @foreach (var item in Model.ProductList)
-                            {
-                                <div class="col-md-4 mb-5">
-                                    <div class="card h-100">
-                                        <!-- Sale badge-->
-                                        <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
-                                        <!-- Product image-->
-                                        <img class="card-img-top img-fluid" src="images/1milte.jpeg" alt="..." style="max-width: 100%;" />
-                                        <!-- Product details-->
-                                        <div class="card-body p-4">
-                                            <div class="text-center">
-                                                <!-- Product name-->
-                                                <h5 class="fw-bolder">@item.ProductName</h5>
-                                                <!-- Product price-->
-                                                <span class="text-muted text-decoration-line-through">@(@item.Price * 1.3)</span>
-                                                @item.Price
-                                            </div>
+                </div>
+                <!-- Product List Section -->
+                <div class="col-10">
+                    <div class="row justify-content-center gx-4 gx-lg-5">
+                        @foreach (var item in Model.ProductList)
+                        {
+                            <div class="col-md-4 mb-5">
+                                <div class="card h-100">
+                                    <!-- Sale badge-->
+                                    <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
+                                    <!-- Product image-->
+                                    <img class="card-img-top img-fluid" src="images/1milte.jpeg" alt="..." style="max-width: 100%;" />
+                                    <!-- Product details-->
+                                    <div class="card-body p-4">
+                                        <div class="text-center">
+                                            <!-- Product name-->
+                                            <h5 class="fw-bolder">@item.ProductName</h5>
+                                            <!-- Product price-->
+                                            <span class="text-muted text-decoration-line-through">@(@item.Price * 1.3)</span>
+                                            @item.Price
                                         </div>
-                                        <!-- Product actions-->
-                                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                            <div class="text-center">
-                                                <a class="btn btn-outline-dark mt-auto" asp-page="./Detaill" asp-route-id="@item.ProductID">Add to cart</a>
-                                            </div>
+                                    </div>
+                                    <!-- Product actions-->
+                                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                        <div class="text-center">
+                                            <a class="btn btn-outline-dark mt-auto" asp-page="./Detaill" asp-route-id="@item.ProductID">Add to cart</a>
                                         </div>
                                     </div>
                                 </div>
-                            }
-                        </div>
+                            </div>
+                        }
                     </div>
                 </div>
             </div>
-            <nav aria-label="Page navigation">
-                <ul id="paginationList" class="pagination justify-content-center">
-                    <!-- Page Numbers -->
-                    @for (int i = 1; i <= Model.TotalProPage; i++)
-                    {
+        </div>
+        <nav aria-label="Page navigation">
+            <ul id="paginationList" class="pagination justify-content-center">
+                <!-- Page Numbers -->
+                @for (int i = 1; i <= Model.TotalProPage; i++)
+                {
                     <li class="page-item">
                         @* <button class="page-link" onclick="setCurrentPage(@i)">@i</button> *@
                         <a class="page-link" asp-page="./Menu" asp-route-pageNum="@i" asp-route-pageSize="9">@i</a>
                     </li>
-                    }
-                </ul>
-            </nav>
-        </section>
-        <!-- Footer-->
-        <footer class="py-5 bg-dark">
-            <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p></div>
-        </footer>
-        <!-- Bootstrap core JS-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Core theme JS-->
-        <script src="js/scripts.js"></script>
-    </body>
+                }
+            </ul>
+        </nav>
+    </section>
+    <!-- Footer-->
+    <footer class="py-5 bg-dark">
+        <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p></div>
+    </footer>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="js/scripts.js"></script>
+</body>
 </html>
