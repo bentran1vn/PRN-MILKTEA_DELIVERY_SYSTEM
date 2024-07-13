@@ -10,6 +10,7 @@ using Repositories.Users;
 namespace RazorPages.Pages.Account
 {
     [AllowAnonymous]
+
     public class LoginModel(IUserRepository userRepository) : PageModel
     {
         private readonly IUserRepository _userRepository = userRepository;
@@ -51,16 +52,12 @@ namespace RazorPages.Pages.Account
                 {
                     returnUrl = Url.Content("~/");
                 }
-
+            }
                 return LocalRedirect(returnUrl);
-            }
-            else
-            {
-                Message = "Invalid username or password";
-                return Page();
-            }
-        }
 
+
+            
+        }
         private void AddRoleClaim(int role, string userID)
         {
             var claims = new List<Claim>

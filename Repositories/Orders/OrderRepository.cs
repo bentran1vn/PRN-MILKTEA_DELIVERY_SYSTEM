@@ -22,9 +22,21 @@ namespace Repositories.Orders
             return _dao.GetOrder(id);
         }
 
+
+        public IEnumerable<Order> GetOrders(string userID)
+        {
+            return _dao.GetOrders(userID);
+        }
+
+      
+
         public void UpdateOrder(Guid id, int status, string shipperId)
+
         { 
             _dao.UpdateOrder(id, status, shipperId);
         }
+
+       
+        
     }
 }
