@@ -64,14 +64,15 @@ public class CheckoutModel(
         var role = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
         if (userId != null && role is "1")
         {
+            var id = Guid.NewGuid();
+            Order order = new Order
+            {
 
-       
-            
                 userID = userId,
                 total = TotalMoney,
-                orderID = orderIdGuid,
+                orderID = id,
                 status = 0,
-                create_At = now,
+                create_At = DateTime.Now,
                 note = "Order Note",
                 kinhdo = Kinhdo,
                 vido = ViDo,
