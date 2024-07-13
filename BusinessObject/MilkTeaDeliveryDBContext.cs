@@ -82,6 +82,12 @@ namespace BusinessObject
                 .HasForeignKey(u => u.rankID) // Foreign key in User table
                 .OnDelete(DeleteBehavior.Restrict); // Set delete behavior to Restrict
 
+            modelBuilder.Entity<User>()
+                .HasMany<Order>(u => u.Orders)
+                .WithOne(o => o.Users)
+                .HasForeignKey(o => o.userID)
+                .OnDelete(DeleteBehavior.Cascade);
+
             // One-to-Many Relationship between Role and User
             modelBuilder.Entity<User>()
                 .HasOne(u => u.Roles) // A User has one Role
