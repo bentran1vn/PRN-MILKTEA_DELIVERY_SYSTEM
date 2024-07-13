@@ -1,6 +1,8 @@
+using System.Security.Claims;
 using System.Text;
 using BusinessObject.Entities;
 using DataAccessObject.Products;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.SignalR;
@@ -14,6 +16,7 @@ using Repositories.SignalR;
 
 namespace RazorPages.Pages;
 
+[Authorize]
 public class CheckoutModel(
     IProductRepository productRepository,
     IOrderRepository orderRepository,
@@ -53,45 +56,50 @@ public class CheckoutModel(
     
     public async Task<IActionResult> OnPostCheckOut()
     {
-        var now = DateTime.Now;
-        var orderIdGuid = Guid.NewGuid();
-        var order = new Order()
+        var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+        var role = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+        if (userId != null && role is "1")
         {
-            userID = "123123",
-            total = TotalMoney,
-            orderID = orderIdGuid,
-            status = 0,
-            create_At = now,
-            note = "Order Note",
-            kinhdo = Kinhdo,
-            vido = ViDo,
-            address = Address
-        };
-        await orderRepository.Add(order);
-        List<OrderDetail> orderDetailList = new List<OrderDetail>();
-        var sessionCartModels = httpContextAccessor.HttpContext?.Session?.GetList<ProductCartModel>("Cart").ToList();
-        foreach (var item in sessionCartModels)
-        {
-            orderDetailList.Add(new OrderDetail()
+            var now = DateTime.Now;
+            var orderIdGuid = Guid.NewGuid();
+            var order = new Order()
             {
+                userID = userId,
+                total = TotalMoney,
                 orderID = orderIdGuid,
-                quantity = item.Quantity,
-                productID = item.ProductId,
-                note = "Note"
-            });
+                status = 0,
+                create_At = now,
+                note = "Order Note",
+                kinhdo = Kinhdo,
+                vido = ViDo,
+                address = Address
+            };
+            await orderRepository.Add(order);
+            List<OrderDetail> orderDetailList = new List<OrderDetail>();
+            var sessionCartModels = httpContextAccessor.HttpContext?.Session?.GetList<ProductCartModel>("Cart").ToList();
+            foreach (var item in sessionCartModels)
+            {
+                orderDetailList.Add(new OrderDetail()
+                {
+                    orderID = orderIdGuid,
+                    quantity = item.Quantity,
+                    productID = item.ProductId,
+                    note = "Note"
+                });
+            }
+            await orderDetailRepository.AddOrderDetails(orderDetailList);
+            await productRepository.UpdateProductQuantity(sessionCartModels);
+            // await hubContext.Clients.All.SendAsync("NewOrder", new OderHistoryModel
+            // {
+            //     OrderId = orderIdGuid.ToString(),
+            //     User_Name = "NguoiMua",
+            //     NumOfProduct = sessionCartModels.ToList().Count,
+            //     Total = TotalMoney,
+            //     Create_At = now,
+            //     ShipperName = "NguoiBan"
+            // });
+            httpContextAccessor.HttpContext?.Session?.SetList("Cart", new List<ProductCartModel>());
         }
-        await orderDetailRepository.AddOrderDetails(orderDetailList);
-        await productRepository.UpdateProductQuantity(sessionCartModels);
-        // await hubContext.Clients.All.SendAsync("NewOrder", new OderHistoryModel
-        // {
-        //     OrderId = orderIdGuid.ToString(),
-        //     User_Name = "NguoiMua",
-        //     NumOfProduct = sessionCartModels.ToList().Count,
-        //     Total = TotalMoney,
-        //     Create_At = now,
-        //     ShipperName = "NguoiBan"
-        // });
-        httpContextAccessor.HttpContext?.Session?.SetList("Cart", new List<ProductCartModel>());
         return RedirectToPage("./Menu");
     }
 

@@ -10,7 +10,7 @@ namespace Repositories.Orders
 
         Order GetOrderById(string id);
 
-        void UpdateOrder(Guid id, int status);
+        void UpdateOrder(Guid id, int status, string shipperId);
     }
 };
 
