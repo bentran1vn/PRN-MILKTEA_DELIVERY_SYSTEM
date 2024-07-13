@@ -1,0 +1,99 @@
+@page "{id?}"
+@model RazorPages.Pages.UserDetail
+
+@{
+Layout = "";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="~/css/bootstrap.css" />
+    <title>User Detail - RazorPages</title>
+    <style>
+        body, html {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f5f5f5;
+        }
+
+        .user-detail-container {
+            max-width: 600px;
+            width: 40%;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+
+        .user-detail-container h2 {
+            margin-bottom: 20px;
+        }
+
+        .user-detail-container .form-label {
+            margin-bottom: 5px;
+            width: 30%;
+        }
+
+        .user-detail-container .form-control-plaintext {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="user-detail-container">
+    <div class="d-flex justify-content-between align-items-center">
+        <h2 class="text-center">User Detail</h2>
+        <a asp-page="./UserPage">Back to User Management</a>
+    </div>
+    <hr/>
+    <form method="post">
+        <div class="mb-3 d-flex justify-content-center align-items-center">
+            <label class="form-label">User ID</label>
+            <input type="text" class="form-control" value="@Model.UserModel?.userID" readonly />
+            
+        </div>
+        <input type="hidden" asp-for="Input.userId" />
+        <div class="mb-3 d-flex justify-content-center align-items-center">
+            <label class="form-label">Username</label>
+            <input type="text" class="form-control" asp-for="Input.userName" />
+        </div>
+        <div class="mb-3 d-flex justify-content-center align-items-center">
+            <label class="form-label">Email</label>
+            <input type="text" class="form-control" value="@Model.UserModel?.email" readonly />
+        </div>
+        <div class="mb-3 d-flex justify-content-center align-items-center">
+            <label class="form-label">Phone Number</label>
+            <input type="text" class="form-control" asp-for="Input.phoneNumber" />
+        </div>
+        <div class="mb-3 d-flex justify-content-center align-items-center">
+            <label class="form-label">Address</label>
+            <input type="text" class="form-control" asp-for="Input.address" />
+        </div>
+        <div class="mb-3 d-flex justify-content-center align-items-center">
+            <label class="form-label">Password</label>
+            <input type="text" class="form-control" asp-for="Input.password" />
+        </div>
+        <div class="mb-3 d-flex justify-content-center align-items-center">
+            <label class="form-label">Role Name</label>
+            <input type="text" class="form-control" value="@Model.UserModel?.Roles.roleName" readonly />
+        </div>
+        <div class="mb-3 d-flex justify-content-center align-items-center">
+            <label class="form-label">Year of Birth</label>
+            <input type="date" class="form-control" asp-for="Input.yob" />
+        </div>
+        <div class="mb-3 d-flex justify-content-center align-items-center">
+            <label class="form-label">Created At</label>
+            <input type="text" class="form-control" value="@Model.UserModel?.create_At?.ToString("yyyy-MM-dd HH:mm:ss")" readonly />
+        </div>
+        <button type="submit" class="form-label btn btn-primary">Update</button>
+    </form>
+</div>
+</body>
+</html>

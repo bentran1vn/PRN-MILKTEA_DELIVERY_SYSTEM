@@ -36,13 +36,13 @@ namespace RazorPages.Pages.Account
             if (user != null)
             {
                 AddRoleClaim(user.roleID, user.userID);
-                if (user.roleID == 1) // Example role for admin
+                if (user.roleID == 2) // Example role for admin
                 {
                     returnUrl = Url.Page("/Admin");
                 }
-                else if (user.roleID == 2) // Example role for shipper
+                else if (user.roleID == 1) // Example role for shipper
                 {
-                    returnUrl = Url.Page("/");
+                    returnUrl = Url.Page("/Index");
                 }
                 else if (user.roleID == 3) // Example role for shipper
                 {

@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using System.Text;
 using BusinessObject.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -22,7 +23,14 @@ public class Shipper(
 
     public void OnGet()
     {
-        Orders = orderRepository.GetAllOrder(0).ToList();
+        if (IsTaked == String.Empty)
+        {
+            Orders = orderRepository.GetAllOrder(0).ToList();
+        }
+        else if(IsTaked != String.Empty)
+        {
+            Orders = orderRepository.GetAllOrder(1).Where(o => o.orderID.Equals(new Guid(IsTaked))).ToList();
+        }
     }
     
     public IActionResult OnPostHandlerTake()
@@ -31,8 +39,25 @@ public class Shipper(
         var role = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
         if (userId != null && role is "3")
         {
-            orderRepository.UpdateOrder(new Guid(OrderId), 2, userId);
+            orderRepository.UpdateOrder(new Guid(OrderId), 1, userId);
+            IsTaked = OrderId;
         }
         return RedirectToPage("./Shipper");
+    }
+    
+    public string IsTaked
+    {
+        get
+        {
+            if (HttpContext.Session.TryGetValue("IsTaked", out byte[] value))
+            {
+                return Encoding.UTF8.GetString(value);
+            }
+            return string.Empty;
+        }
+        set
+        {
+            HttpContext.Session.Set("IsTaked", Encoding.UTF8.GetBytes(value));
+        }
     }
 }

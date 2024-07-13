@@ -199,7 +199,7 @@ namespace BusinessObject.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("169232b4-84ea-48a9-af65-c92912bd1f3b"),
+                            Id = new Guid("5cb71893-a17e-4412-943c-a6e0cc45f4be"),
                             note = "Note",
                             orderID = new Guid("11111111-1111-1111-1111-111111111111"),
                             productID = "product1",
@@ -207,7 +207,7 @@ namespace BusinessObject.Migrations
                         },
                         new
                         {
-                            Id = new Guid("2307493a-fbc1-4006-a99f-90df3c2a01e5"),
+                            Id = new Guid("d33a159f-370e-421f-b1c3-635e4a91ac83"),
                             note = "Note",
                             orderID = new Guid("11111111-1111-1111-1111-111111111111"),
                             productID = "product2",
@@ -215,7 +215,7 @@ namespace BusinessObject.Migrations
                         },
                         new
                         {
-                            Id = new Guid("32320d86-2cc8-44e7-b604-71fded18702e"),
+                            Id = new Guid("f98b39d1-3583-446a-a77f-433a2cd77c1f"),
                             note = "Note",
                             orderID = new Guid("11111111-1111-1111-1111-111111111111"),
                             productID = "product3",
@@ -223,7 +223,7 @@ namespace BusinessObject.Migrations
                         },
                         new
                         {
-                            Id = new Guid("0233938e-6827-4665-84ca-b633171f9002"),
+                            Id = new Guid("ceb555cb-a260-41e5-88cb-0872e6f9a6fb"),
                             note = "Note",
                             orderID = new Guid("11111111-1111-1111-1111-111111111111"),
                             productID = "product4",
@@ -231,7 +231,7 @@ namespace BusinessObject.Migrations
                         },
                         new
                         {
-                            Id = new Guid("af15979d-32d5-4eb5-9862-9f014c74540c"),
+                            Id = new Guid("a2b1da07-3148-4962-b681-1aa88a91b365"),
                             note = "Note",
                             orderID = new Guid("33333333-3333-3333-3333-333333333333"),
                             productID = "product3",
@@ -239,7 +239,7 @@ namespace BusinessObject.Migrations
                         },
                         new
                         {
-                            Id = new Guid("bd30df34-677f-420d-9804-ee9fb4520114"),
+                            Id = new Guid("8a42f8c6-95f6-418c-a444-29efed5dd104"),
                             note = "Note",
                             orderID = new Guid("33333333-3333-3333-3333-333333333333"),
                             productID = "product4",
@@ -247,7 +247,7 @@ namespace BusinessObject.Migrations
                         },
                         new
                         {
-                            Id = new Guid("5fdffde9-a280-4a63-83e4-426aebad648e"),
+                            Id = new Guid("a9b0d7ed-b6d0-4eb9-a9af-1367d6358091"),
                             note = "Note",
                             orderID = new Guid("33333333-3333-3333-3333-333333333333"),
                             productID = "product6",
@@ -255,7 +255,7 @@ namespace BusinessObject.Migrations
                         },
                         new
                         {
-                            Id = new Guid("18134720-1026-4ce5-a41e-d64a806ed8d5"),
+                            Id = new Guid("2dff6eae-b513-4fcf-928b-936fa85a9bc8"),
                             note = "Note",
                             orderID = new Guid("22222222-2222-2222-2222-222222222222"),
                             productID = "product5",
@@ -263,7 +263,7 @@ namespace BusinessObject.Migrations
                         },
                         new
                         {
-                            Id = new Guid("d74901ae-80b6-4b3a-b3ce-868c1fe1fa03"),
+                            Id = new Guid("e868604b-0ab8-4f55-8935-0c758e6df01d"),
                             note = "Note",
                             orderID = new Guid("22222222-2222-2222-2222-222222222222"),
                             productID = "product6",
@@ -271,7 +271,7 @@ namespace BusinessObject.Migrations
                         },
                         new
                         {
-                            Id = new Guid("ef15e913-425a-43d9-8da3-7ba5f86cccdb"),
+                            Id = new Guid("3b139f44-2e94-4792-898c-024c4f476ccb"),
                             note = "Note",
                             orderID = new Guid("22222222-2222-2222-2222-222222222222"),
                             productID = "product7",
@@ -279,7 +279,7 @@ namespace BusinessObject.Migrations
                         },
                         new
                         {
-                            Id = new Guid("7d5f3729-234b-4ac6-90c1-1efa6307235c"),
+                            Id = new Guid("5effbc1b-ba0a-4e34-87e2-372511a5ced8"),
                             note = "Note",
                             orderID = new Guid("22222222-2222-2222-2222-222222222222"),
                             productID = "product8",
@@ -989,7 +989,7 @@ namespace BusinessObject.Migrations
                     b.HasOne("BusinessObject.Entities.User", "Users")
                         .WithMany("Orders")
                         .HasForeignKey("userID")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("BusinessObject.Entities.Voucher", "Vouchers")

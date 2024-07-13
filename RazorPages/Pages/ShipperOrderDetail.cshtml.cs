@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using System.Text;
 using BusinessObject.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -35,8 +36,23 @@ public class ShipperOrderDetail(
         if (userId != null && role is "3")
         {
             orderRepository.UpdateOrder(new Guid(OrderId), 2, userId);
+            IsTaked = String.Empty;
         }
         return RedirectToPage("./Shipper");
     }
-    
+    public string IsTaked
+    {
+        get
+        {
+            if (HttpContext.Session.TryGetValue("IsTaked", out byte[] value))
+            {
+                return Encoding.UTF8.GetString(value);
+            }
+            return string.Empty;
+        }
+        set
+        {
+            HttpContext.Session.Set("IsTaked", Encoding.UTF8.GetBytes(value));
+        }
+    }
 }
