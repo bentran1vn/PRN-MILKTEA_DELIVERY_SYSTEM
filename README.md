@@ -12,7 +12,7 @@ The MilkTea Delivery System is a comprehensive web application designed to strea
 
 - **Shipper:** Oversees customer orders and manages the shipping process.
 
-# 2. Tech Stack
+# 1. Tech Stack
 - Backend
   - ASP.NET Core 8.0
   - Entity Framework Core
@@ -26,7 +26,7 @@ The MilkTea Delivery System is a comprehensive web application designed to strea
   - SQL Server
   - Cloudinary Services
 
-# 3. Installation
+# 2. Installation
 ### Clone the Repository
 
 To clone the repository, use the following command in your terminal:
@@ -49,7 +49,7 @@ Once the dependencies are installed, initiate the project by running the server 
 ```bash
 dotnet run
 ```
-# 4. Project Information
+# 3. Project Information
 
 ```sh
 Port: 5166
@@ -57,8 +57,9 @@ SqlServer: 9.0
 Dotnet: 8.0
 EF-Core: 8.0
 ```
-    
-# 6. Team Members
+# 4. Project Demo
+
+# 5. Team Members
 
 | Name                    	| UniID      	| Position                      	|
 |-------------------------	|------------	|-------------------------------	|
@@ -67,4 +68,4 @@ EF-Core: 8.0
 | [**Đỗ Trần Lâm**](https://github.com/khoahocmai)  	| **SE170285** 	| **Member**                    	|
 | [**Nguyễn Quang Thanh**](https://github.com/kle1603)        	| **SE171164** 	| **Member**           	|
 
-#### © 2023 bentran-vn
+#### © 2024 bentran1vn
