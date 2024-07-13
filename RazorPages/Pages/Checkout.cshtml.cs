@@ -85,7 +85,7 @@ public class CheckoutModel(
             {
                 orderDetailList.Add(new OrderDetail()
                 {
-                    orderID = orderIdGuid,
+                    orderID = id,
                     quantity = item.Quantity,
                     productID = item.ProductId,
                     note = "Note"

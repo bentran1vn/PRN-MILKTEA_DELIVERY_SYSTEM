@@ -52,11 +52,12 @@ namespace RazorPages.Pages.Account
                 {
                     returnUrl = Url.Content("~/");
                 }
-
+            }
                 return LocalRedirect(returnUrl);
 
 
-
+            
+        }
         private void AddRoleClaim(int role, string userID)
         {
             var claims = new List<Claim>
