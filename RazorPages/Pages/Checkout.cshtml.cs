@@ -58,8 +58,11 @@ public class CheckoutModel(
     {
         var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
         var role = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+        Console.WriteLine(userId);
+        Console.WriteLine(role);
         if (userId != null && role is "1")
         {
+            Console.WriteLine("hâhha");
             var now = DateTime.Now;
             var orderIdGuid = Guid.NewGuid();
             var order = new Order()
