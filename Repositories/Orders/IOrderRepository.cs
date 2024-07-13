@@ -11,7 +11,6 @@ namespace Repositories.Orders
         Order GetOrderById(string id);
 
 
-        void UpdateOrder(Guid id, int status);
 
         IEnumerable<Order> GetOrders(string userID);
 
