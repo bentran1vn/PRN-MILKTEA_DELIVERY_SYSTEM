@@ -31,10 +31,11 @@ namespace DataAccessObject.Orders
             return _context.Orders.FirstOrDefault(o => o.orderID.Equals(new Guid(id)));
         }
 
-        public void UpdateOrder(Guid? id, int status)
+        public void UpdateOrder(Guid? id, int status, string shipperId)
         {
             var order = _context.Orders.FirstOrDefault(o => o.orderID.Equals(id));
             order!.status = status;
+            order!.shipperID = shipperId;
             _context.Orders.Update(order);
             _context.SaveChanges();
         }

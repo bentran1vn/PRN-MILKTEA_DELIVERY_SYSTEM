@@ -10,47 +10,51 @@ using Repositories.Users;
 namespace RazorPages.Pages.Account
 {
     [AllowAnonymous]
-        public class LoginModel(IUserRepository userRepository) : PageModel
+
+    public class LoginModel(IUserRepository userRepository) : PageModel
+    {
+        private readonly IUserRepository _userRepository = userRepository;
+
+        [TempData]
+        public string Message { get; set; }
+
+        [BindProperty]
+        public User Input { get; set; }
+        
+        [BindProperty(SupportsGet = true)]
+        public string ReturnUrl { get; set; }
+
+        public void OnGet(string returnUrl = null)
         {
-            private readonly IUserRepository _userRepository = userRepository;
+            ReturnUrl = returnUrl ?? Url.Content("~/");
+        }
 
-            [TempData]
-            public string Message { get; set; }
-
-            [BindProperty]
-            public User Input { get; set; }
-            public string returnUrl { get; set; }
-            public void OnGet(string returnUrl =null)
+        public async Task<IActionResult> OnPostAsync(string returnUrl = null)
+        {
+            returnUrl = returnUrl ?? Url.Content("~/");
+            var user = await _userRepository.Login(Input.userName, Input.password);
+            if (user != null)
             {
-                this.returnUrl = returnUrl;
-            }
-
-            public async Task<IActionResult> OnPostAsync(string returnUrl = null)
-            {
-                // Capture the returnUrl from the query string
-                returnUrl = returnUrl ?? Url.Content("~/");
-
-                var user = await _userRepository.Login(Input.userName, Input.password);
-                if (user != null)
+                AddRoleClaim(user.roleID, user.userID);
+                if (user.roleID == 1) // Example role for admin
                 {
-                    AddRoleClaim(user.roleID, user.userID);
-
-                    // Redirect to the ReturnUrl if it exists
-                    if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
-                    {
-                        return Redirect(returnUrl);
-                    }
-                    else
-                    {
-                        return RedirectToPage("/Index");
-                    }
+                    returnUrl = Url.Page("/Admin");
+                }
+                else if (user.roleID == 2) // Example role for shipper
+                {
+                    returnUrl = Url.Page("/");
+                }
+                else if (user.roleID == 3) // Example role for shipper
+                {
+                    returnUrl = Url.Page("/Shipper");
                 }
                 else
                 {
-                    Message = "Invalid username or password";
-                    return Page();
+                    returnUrl = Url.Content("~/");
                 }
-            }
+
+                return LocalRedirect(returnUrl);
+
 
 
         private void AddRoleClaim(int role, string userID)

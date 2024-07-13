@@ -23,7 +23,18 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
         options.SlidingExpiration = true;
         options.AccessDeniedPath = "/Forbidden/";
+        options.LoginPath = "/Account/Login"; // Set the path to your login page
     });
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("UserOnly", policy =>
+        policy.RequireRole("1"));
+    options.AddPolicy("AdminOnly", policy =>
+        policy.RequireRole("2"));
+    options.AddPolicy("ShipperOnly", policy =>
+        policy.RequireRole("3"));
+});
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddDbContext<MilkTeaDeliveryDBContext>();
@@ -36,6 +47,7 @@ builder.Services.AddSignalR(options =>
     // Setting the client timeout (defaults to 30 seconds)
     options.ClientTimeoutInterval = TimeSpan.FromSeconds(20); // Customize as needed
 });
+
 builder.Services.AddScoped<IOrderDetailsRepository, OrderDetailsRepository>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
@@ -43,6 +55,7 @@ builder.Services.AddScoped<IVoucherRepository, VoucherRepository>();
 builder.Services.AddScoped<IFeedBackRepository, FeedBackRepository>();
 builder.Services.AddScoped <IImageUploadService, CloudinaryImageUploadService> ();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+
 var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
