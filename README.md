@@ -1,3 +1,17 @@
+<h1> MILKTEA DELIVERY SYSTEM<br> ỨNG DỤNG GIAO VÀ ĐẶT HÀNG TRÀ SỮA </h1>
+This is a "<i>Mini Capstone RazorPage Project</i>" of FPT University Students in semester 7.<br>
+
+# 0. Introduction
+The MilkTea Delivery System is a comprehensive web application designed to streamline the process of ordering and delivering milk tea. Developed by a team of dedicated FPT University students, this project demonstrates the practical application of knowledge acquired over the course of their studies. Using the Razor Pages framework, the system offers a user-friendly interface and robust functionality, catering to the needs of both customers and delivery personnel. The project aims to provide a seamless experience, from placing an order to tracking its delivery, ensuring customer satisfaction and operational efficiency.
+
+### Roles and Responsibilities of Each Actor:
+
+- **Customer:** Responsible for viewing and selecting products for their orders.
+
+- **Staff:** Manages accounts, products, orders, and vouchers.
+
+- **Shipper:** Oversees customer orders and manages the shipping process.
+
 # 2. Tech Stack
 - Backend
   - ASP.NET Core 8.0
@@ -11,6 +25,38 @@
 - Storage
   - SQL Server
   - Cloudinary Services
+
+# 3. Installation
+### Clone the Repository
+
+To clone the repository, use the following command in your terminal:
+
+```bash
+git clone https://github.com/bentran1vn/PRN-MILKTEA_DELIVERY_SYSTEM.git
+```
+### Install Dependencies
+
+After cloning the repository, navigate into the project directory and install the required dependencies using npm:
+
+```bash
+cd ./RazorPages
+dotnet build
+```
+### Running the Project
+
+Once the dependencies are installed, initiate the project by running the server using Node.js:
+
+```bash
+dotnet run
+```
+# 4. Project Information
+
+```sh
+Port: 5166
+SqlServer: 9.0
+Dotnet: 8.0
+EF-Core: 8.0
+```
     
 # 6. Team Members
 
