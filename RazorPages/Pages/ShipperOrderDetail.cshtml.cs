@@ -1,13 +1,15 @@
+using System.Security.Claims;
 using BusinessObject.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.SignalR;
 using Repositories.OrderDetails;
 using Repositories.Orders;
 using Repositories.SignalR;
-
 namespace RazorPages.Pages;
 
+[Authorize]
 public class ShipperOrderDetail(
     IOrderRepository orderRepository,
     IOrderDetailsRepository orderDetailRepository,
@@ -28,7 +30,12 @@ public class ShipperOrderDetail(
     
     public IActionResult OnPostHandlerDone()
     {
-        orderRepository.UpdateOrder(new Guid(OrderId), 2);
+        var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+        var role = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+        if (userId != null && role is "3")
+        {
+            orderRepository.UpdateOrder(new Guid(OrderId), 2, userId);
+        }
         return RedirectToPage("./Shipper");
     }
     

@@ -19,17 +19,40 @@ namespace RazorPages.Pages.Account
 
         [BindProperty]
         public User Input { get; set; }
-        public void OnGet()
+        
+        [BindProperty(SupportsGet = true)]
+        public string ReturnUrl { get; set; }
+
+        public void OnGet(string returnUrl = null)
         {
+            ReturnUrl = returnUrl ?? Url.Content("~/");
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
+            returnUrl = returnUrl ?? Url.Content("~/");
             var user = await _userRepository.Login(Input.userName, Input.password);
             if (user != null)
             {
                 AddRoleClaim(user.roleID, user.userID);
-                return RedirectToPage("/Index");
+                if (user.roleID == 1) // Example role for admin
+                {
+                    returnUrl = Url.Page("/Admin");
+                }
+                else if (user.roleID == 2) // Example role for shipper
+                {
+                    returnUrl = Url.Page("/");
+                }
+                else if (user.roleID == 3) // Example role for shipper
+                {
+                    returnUrl = Url.Page("/Shipper");
+                }
+                else
+                {
+                    returnUrl = Url.Content("~/");
+                }
+
+                return LocalRedirect(returnUrl);
             }
             else
             {

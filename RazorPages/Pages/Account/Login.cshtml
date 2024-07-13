@@ -20,6 +20,7 @@
                                     </b>
                                     <input class="border border-5 rounded rounded-3" style="width:100%" required type="password" name="Password" placeholder="Enter your password here" />
                                 </h6>
+                                <input type="hidden" asp-for="ReturnUrl" value="@Model.ReturnUrl" />
                                 @if (!String.IsNullOrEmpty(Model.Message))
                                 {
                                     <div class="alert alert-danger" role="alert">
@@ -80,7 +81,6 @@
                                         <g>
                                         </g>
                                     </a>
-
                                 </button>
                             </form>
                         </div>
