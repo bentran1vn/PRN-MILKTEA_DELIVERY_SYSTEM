@@ -1,4 +1,4 @@
-<h1> MILKTEA DELIVERY SYSTEM<br> ỨNG DỤNG GIAO VÀ ĐẶT HÀNG TRÀ SỮA </h1>
+<h1> MILKTEA DELIVERY SYSTEM<br> ỨNG DỤNG GIAO VÀ ĐẶT HÀNG TRÀ SỮA ( MEO TEA )</h1>
 This is a "<i>Mini Capstone RazorPage Project</i>" of FPT University Students in semester 7.<br>
 
 # 0. Introduction
