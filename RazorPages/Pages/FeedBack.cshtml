@@ -1,0 +1,47 @@
+﻿@page
+@model RazorPages.Pages.FeedBackModel
+
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        html { 
+            font-family: Arial, sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <div style="text-align:center; margin-top:25px">
+        <h1>Feedback for Order:</h1>
+        <h2 style="font-family:'Times New Roman'">@Model.OrderID</h2>
+        <form method="post">
+            <div style="margin-top: 20px;">
+                <textarea asp-for="FeedBack.content" placeholder="Write your feedback here..." style="width: 100%; max-width: 600px; height: 150px; padding: 10px; font-family: Arial, sans-serif; font-size: 16px; border: 1px solid #ccc; border-radius: 5px; resize: vertical;"></textarea>
+            </div>
+            <div>
+                <input type="submit" value="Feedback" class="btn btn-primary" />
+                <button asp-page="./OrderFeedBack" style="background:red;color:white" class="btn btn-destructive">Cancel</button>
+            </div>
+        </form>
+    </div>
+    @if (!String.IsNullOrEmpty(Model.Message)&&Model.Cout!=0)
+    {
+       if(Model.IsSuccess)
+       {
+           <div style="text-align:center; margin-top:25px">
+               <h2 style="color:green">@Model.Message</h2>
+           </div>
+       }
+       else
+       {
+           <div style="text-align:center; margin-top:25px">
+               <h2 style="color:red">@Model.Message</h2>
+            </div>
+        }
+        
+
+    }
+    <!-- Add your feedback form or content here -->
+
+</body>
+</html>

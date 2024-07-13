@@ -18,5 +18,11 @@ public class OrderDetailDAO
     {
         return _context.OrderDetails.Include(od => od.Products).Where(od => od.orderID.Equals(new Guid(orderId!)));
     }
+
+    public IEnumerable<Guid> GetOrderDetailIDsFromOrderID(string orderID)
+    {
+        var list = _context.OrderDetails.Where(od => od.orderID.ToString()==orderID).Select(od => od.Id).ToList();
+        return list;
+    }
     
 }

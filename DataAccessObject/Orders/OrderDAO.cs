@@ -39,7 +39,25 @@ namespace DataAccessObject.Orders
             _context.Orders.Update(order);
             _context.SaveChanges();
         }
-        
+
+
+        public IEnumerable<Order> GetOrders(string userID)
+        {
+            var orders = _context.Orders.Include(o => o.Users).Where(o => o.userID == userID && o.status != 0).ToList();
+            foreach (var order in orders)
+            {
+                try
+                {
+                    order.Shippers = _context.Users.FirstOrDefault(u => u.userID == order.shipperID);
+                }
+                catch (Exception e)
+                {
+
+                }
+
+            }
+            return orders;
+        }
     }
 };
 

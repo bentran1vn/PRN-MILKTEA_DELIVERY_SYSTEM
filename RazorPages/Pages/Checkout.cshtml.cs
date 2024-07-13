@@ -25,10 +25,14 @@ public class CheckoutModel(
     IHttpContextAccessor httpContextAccessor) : PageModel
 {
     [BindProperty] public IList<Product> CartListModel { get; set; }
-    
+
     [BindProperty] public IList<ProductCartModel>? SessionList { get; set; }
     public void OnGet()
     {
+
+
+
+
         var idInSession = httpContextAccessor.HttpContext?.Session?.GetList<ProductCartModel>("Cart")?.Select(x => x.ProductId);
         var inSession = idInSession?.ToList();
         if (inSession.IsNullOrEmpty()) return;
@@ -39,7 +43,7 @@ public class CheckoutModel(
             CartListModel = result;
         }
     }
-    
+
     public double GetTotalPrice()
     {
         double result = 0;
@@ -53,17 +57,16 @@ public class CheckoutModel(
         }
         return result;
     }
-    
+
     public async Task<IActionResult> OnPostCheckOut()
     {
         var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
         var role = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
         if (userId != null && role is "1")
         {
-            var now = DateTime.Now;
-            var orderIdGuid = Guid.NewGuid();
-            var order = new Order()
-            {
+
+       
+            
                 userID = userId,
                 total = TotalMoney,
                 orderID = orderIdGuid,
@@ -103,7 +106,7 @@ public class CheckoutModel(
         return RedirectToPage("./Menu");
     }
 
-    
+
     public IActionResult OnPostCalculateShippingCost([FromBody] DistanceRequest request)
     {
         double distance = request.Distance;
@@ -122,7 +125,7 @@ public class CheckoutModel(
         // For example, $5 base cost + $1 per km
         return 10000 * (distance * 1);
     }
-    
+
     public double TotalMoney
     {
         get
@@ -138,7 +141,7 @@ public class CheckoutModel(
             HttpContext.Session.Set("TotalMoney", Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(value)));
         }
     }
-    
+
     public string Kinhdo
     {
         get
@@ -154,7 +157,7 @@ public class CheckoutModel(
             HttpContext.Session.Set("Kinhdo", Encoding.UTF8.GetBytes(value));
         }
     }
-    
+
     public string ViDo
     {
         get
@@ -170,7 +173,7 @@ public class CheckoutModel(
             HttpContext.Session.Set("ViDo", Encoding.UTF8.GetBytes(value));
         }
     }
-    
+
     public string Address
     {
         get
@@ -193,6 +196,6 @@ public class DistanceRequest
     public double Distance { get; set; }
     public string KinhDo { get; set; }
     public string ViDo { get; set; }
-    
+
     public string AddressUser { get; set; }
 }
