@@ -14,8 +14,8 @@
     
 # 6. Team Members
 
-| Name                    	| UniID      	| Role      	| Position                      	|
-|-------------------------	|------------	|------------	|-------------------------------	|
+| Name                    	| UniID      	| Position                      	|
+|-------------------------	|------------	|-------------------------------	|
 | [**Trần Đình Thiên Tân**](https://github.com/bentran1vn) 	| **SE171757** 	| **Leader** 	|
 | [**Lại Nguyễn Minh Quân**](https://github.com/jeffySE29) | **SE170067** 	| **Member**                    	|
 | [**Đỗ Dương Đăng Khoa**](https://github.com/khoahocmai)  	| **SE170285** 	| **Member**                    	|
