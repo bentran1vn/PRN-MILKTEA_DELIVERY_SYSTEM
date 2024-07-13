@@ -63,8 +63,8 @@ EF-Core: 8.0
 | Name                    	| UniID      	| Position                      	|
 |-------------------------	|------------	|-------------------------------	|
 | [**Trần Đình Thiên Tân**](https://github.com/bentran1vn) 	| **SE171757** 	| **Leader** 	|
-| [**Lại Nguyễn Minh Quân**](https://github.com/jeffySE29) | **SE170067** 	| **Member**                    	|
-| [**Đỗ Dương Đăng Khoa**](https://github.com/khoahocmai)  	| **SE170285** 	| **Member**                    	|
-| [**Lê Bảo Khang**](https://github.com/kle1603)        	| **SE171164** 	| **Member**           	|
+| [**Phạm Phúc Nghị**](https://github.com/jeffySE29) | **SE170067** 	| **Member**                    	|
+| [**Đỗ Trần Lâm**](https://github.com/khoahocmai)  	| **SE170285** 	| **Member**                    	|
+| [**Nguyễn Quang Thanh**](https://github.com/kle1603)        	| **SE171164** 	| **Member**           	|
 
 #### © 2023 bentran-vn
