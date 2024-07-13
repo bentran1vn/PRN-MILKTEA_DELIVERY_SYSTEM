@@ -16,9 +16,9 @@
 
 | Name                    	| UniID      	| Role      	| Position                      	|
 |-------------------------	|------------	|------------	|-------------------------------	|
-| [**Trần Đình Thiên Tân**](https://github.com/bentran1vn) 	| **SE171757** 	| **FullStack** 	| **Leader** 	|
-| [**Lại Nguyễn Minh Quân**](https://github.com/jeffySE29) | **SE170067** 	| **Backend** 	| **Member**                    	|
-| [**Đỗ Dương Đăng Khoa**](https://github.com/khoahocmai)  	| **SE170285** 	| **Backend** 	| **Member**                    	|
-| [**Lê Bảo Khang**](https://github.com/kle1603)        	| **SE171164** 	| **Frontend** | **Member**           	|
+| [**Trần Đình Thiên Tân**](https://github.com/bentran1vn) 	| **SE171757** 	| **Leader** 	|
+| [**Lại Nguyễn Minh Quân**](https://github.com/jeffySE29) | **SE170067** 	| **Member**                    	|
+| [**Đỗ Dương Đăng Khoa**](https://github.com/khoahocmai)  	| **SE170285** 	| **Member**                    	|
+| [**Lê Bảo Khang**](https://github.com/kle1603)        	| **SE171164** 	| **Member**           	|
 
 #### © 2023 bentran-vn
