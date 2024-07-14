@@ -1,12 +1,12 @@
 ﻿@page
-@model RazorPages.Pages.VoucherAddNewPageModel
+@model VoucherEditModel
 
 @{
-    ViewData["Title"] = "Create Voucher";
+    ViewData["Title"] = "Edit";
     Layout = "~/Pages/Shared/_AdminLayout.cshtml";
 }
 
-<h1>Create new voucher</h1>
+<h1>Edit</h1>
 
 <h4>Voucher</h4>
 <hr />
@@ -14,44 +14,49 @@
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Voucher.voucherID" />
             <div class="form-group">
-                <label asp-for="Voucher.voucherName" class="control-label">Voucher Name</label>
+                <label asp-for="Voucher.voucherName" class="control-label"></label>
                 <input asp-for="Voucher.voucherName" class="form-control" />
                 <span asp-validation-for="Voucher.voucherName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Voucher.description" class="control-label">Description</label>
+                <label asp-for="Voucher.description" class="control-label"></label>
                 <input asp-for="Voucher.description" class="form-control" />
                 <span asp-validation-for="Voucher.description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Voucher.amount" class="control-label">Amount</label>
+                <label asp-for="Voucher.amount" class="control-label"></label>
                 <input asp-for="Voucher.amount" class="form-control" />
                 <span asp-validation-for="Voucher.amount" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Voucher.min" class="control-label">Minimum order value</label>
+                <label asp-for="Voucher.min" class="control-label"></label>
                 <input asp-for="Voucher.min" class="form-control" />
                 <span asp-validation-for="Voucher.min" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Voucher.quantity" class="control-label">Quantity</label>
+                <label asp-for="Voucher.quantity" class="control-label"></label>
                 <input asp-for="Voucher.quantity" class="form-control" />
                 <span asp-validation-for="Voucher.quantity" class="text-danger"></span>
             </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Voucher.status" /> @Html.DisplayNameFor(model => model.Voucher.status)
+                </label>
+            </div>
+            @if(Model.Msg != null || Model.Msg != "")
+            {
+                <p style="color:red">
+                    @Model.Msg
+                </p>
+            }
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
-
-@if(Model.msg != null || Model.msg != "")
-{
-    <p>
-        @Model.msg
-    </p>
-}
 
 <div>
     <a asp-page="./VoucherList">Back to List</a>
