@@ -16,7 +16,8 @@ public class OrderDetailDAO
 
     public IEnumerable<OrderDetail> GetOrderDetailByOrderId(string? orderId)
     {
-        return _context.OrderDetails.Include(od => od.Products).Where(od => od.orderID.Equals(new Guid(orderId!)));
+        var test = _context.OrderDetails.Include(od => od.Products).Where(od => od.orderID.Equals(new Guid(orderId!))).ToList();
+        return test;
     }
 
     public IEnumerable<Guid> GetOrderDetailIDsFromOrderID(string orderID)

@@ -6,7 +6,7 @@ namespace Repositories.Orders
     public class OrderRepository : IOrderRepository
     {
         private readonly OrderDAO _dao = new();
-        
+
         public async Task Add(Order order)
         {
             await _dao.AddOrder(order);
@@ -14,7 +14,7 @@ namespace Repositories.Orders
 
         public IEnumerable<Order> GetAllOrder(int? status)
         {
-            return  _dao.GetAllOrder(status).OrderBy(o => o.create_At);
+            return _dao.GetAllOrder(status).OrderBy(o => o.create_At);
         }
 
         public Order GetOrderById(string id)
@@ -22,21 +22,26 @@ namespace Repositories.Orders
             return _dao.GetOrder(id);
         }
 
+        public IEnumerable<Order> GetAllOrders()
+        {
+
+            return _dao.GetAllOrders();
+        }
 
         public IEnumerable<Order> GetOrders(string userID)
         {
             return _dao.GetOrders(userID);
         }
 
-      
+
 
         public void UpdateOrder(Guid id, int status, string shipperId)
 
-        { 
+        {
             _dao.UpdateOrder(id, status, shipperId);
         }
 
-       
-        
+
+
     }
 }

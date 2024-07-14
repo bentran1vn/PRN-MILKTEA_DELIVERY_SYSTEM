@@ -1,0 +1,56 @@
+﻿@page
+@model VoucherDetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Voucher</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Voucher.voucherName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Voucher.voucherName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Voucher.description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Voucher.description)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Voucher.amount)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Voucher.amount)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Voucher.min)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Voucher.min)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Voucher.quantity)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Voucher.quantity)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Voucher.status)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Voucher.status)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./VoucherEditPage" asp-route-id="@Model.Voucher.voucherID">Edit</a> |
+    <a asp-page="./VoucherList">Back to List</a>
+</div>
