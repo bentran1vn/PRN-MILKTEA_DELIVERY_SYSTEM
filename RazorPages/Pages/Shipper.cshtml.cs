@@ -33,7 +33,7 @@ public class Shipper(
         }
     }
     
-    public IActionResult OnPostHandlerTake()
+    public async Task<IActionResult> OnPostHandlerTake()
     {
         var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
         var role = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
@@ -42,6 +42,7 @@ public class Shipper(
             orderRepository.UpdateOrder(new Guid(OrderId), 1, userId);
             IsTaked = OrderId;
         }
+        await hubContext.Clients.All.SendAsync("NewStatus");
         return RedirectToPage("./Shipper");
     }
     

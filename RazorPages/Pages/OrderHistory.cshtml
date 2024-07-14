@@ -54,7 +54,7 @@
         </ul>
     </nav>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/5.0.11/signalr.min.js"></script>
-    <script type="text/javascript">
+<script type="text/javascript">
         const connection = new signalR.HubConnectionBuilder()
         .withUrl("/signalrServer")
         .withAutomaticReconnect() // Automatically attempt to reconnect if the connection is lost
@@ -66,45 +66,12 @@
             
         console.log(connection);
 
-        connection.on("NewOrder", function (oderHistoryModel) {
-            console.log(oderHistoryModel)
-            const tr = document.createElement("tr");
-            
-            // Create and append each table cell (td) to the row
-            const orderIdTd = document.createElement("td");
-            orderIdTd.textContent = oderHistoryModel.orderId;
-            tr.appendChild(orderIdTd);
+        connection.on("NewOrder", function () {
+            location.reload();
+        });
 
-            const usernameTd = document.createElement("td");
-            usernameTd.textContent = oderHistoryModel.user_Name;
-            tr.appendChild(usernameTd);
-
-            const numberProductTd = document.createElement("td");
-            numberProductTd.textContent = oderHistoryModel.numOfProduct;
-            tr.appendChild(numberProductTd);
-
-            const totalMoneyTd = document.createElement("td");
-            totalMoneyTd.textContent = oderHistoryModel.total; // Formatting as currency
-            tr.appendChild(totalMoneyTd);
-
-            const shipperNameTd = document.createElement("td");
-            shipperNameTd.textContent = oderHistoryModel.shipperName;
-            tr.appendChild(shipperNameTd);
-
-            const createdAtTd = document.createElement("td");
-            createdAtTd.textContent = oderHistoryModel.create_At; // Assuming it's a readable date string
-            tr.appendChild(createdAtTd);
-
-            // Create the action button cell
-            const actionsTd = document.createElement("td");
-            const detailButton = document.createElement("button");
-            detailButton.className = "btn btn-info btn-sm";
-            detailButton.textContent = "Detail";
-            actionsTd.appendChild(detailButton);
-            tr.appendChild(actionsTd);
-
-            // Append the new row to the table body with id 'orderHistoryList'
-            document.getElementById("orderHistoryList").appendChild(tr);
+        connection.on("NewStatus", function () {
+            location.reload();
         });
 
         connection.start().catch(function (err) {
