@@ -1,0 +1,89 @@
+﻿@page
+@model RazorPages.Pages.OrderDetailHistoryModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            max-width: 800px;
+        }
+
+        #map {
+            position: relative;
+            height: 400px;
+            width: 100%;
+        }
+
+        #distance {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: white;
+            padding: 5px;
+            z-index: 1;
+        }
+
+        .map-container {
+            height: 400px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-5">
+        <a asp-page="./OrderHistory" class="btn btn-dark mb-3">Back to Home</a>
+        <div class="card">
+            <div class="card-body">
+                <h1 class="card-title text-center">Order Detail</h1>
+                <hr>
+                @if (Model.orderDetails != null)
+                {
+                    @foreach (var item in Model.orderDetails)
+                    {
+                        <li class="list-group-item mb-3 border-0 box-shadow shadow-sm">
+                            <div class="row">
+                                <div class="col-2">
+                                    <div class="d-flex justify-content-center align-items-center rounded-circle" style="width: 50px; height: 50px; overflow: hidden;">
+                                        <img src="@(item.Products.Imgs)" alt="Ảnh sản phẩm" class="img-fluid" style="object-fit: cover; width: 100%; height: 100%;">
+                                    </div>
+                                </div>
+                                <div class="col-7">
+                                    <div>
+                                        <div class="text-truncate">Tên Sản phẩm: <strong>@item.Products.ProductName</strong></div>
+                                        - @item.Products.ProductDescription
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div>
+                                        Giá: @item.Products.Quantity<br>
+                                        Số lượng: @item.quantity <!-- Replace with your dynamic quantity -->
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    }
+                }
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

@@ -58,6 +58,13 @@ namespace DataAccessObject.Orders
             }
             return orders;
         }
+
+
+        public IEnumerable<Order> GetAllOrders()
+        {
+
+            return [.. _context.Orders.Include(o => o.Users).Include(x=>x.Shippers)];
+        }
     }
-};
+}
 
