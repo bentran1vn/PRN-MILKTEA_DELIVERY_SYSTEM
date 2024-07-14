@@ -19,6 +19,6 @@ public class OrderHistory : PageModel
 
     public void OnGet()
     {
-        Order = _orderRepository.GetAllOrders();
+        Order = _orderRepository.GetAllOrders().OrderByDescending(x => x.create_At);
     }
 }
