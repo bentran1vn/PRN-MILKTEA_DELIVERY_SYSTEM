@@ -13,14 +13,14 @@ namespace RazorPages.Pages
 {
     public class VoucherAddNewPageModel(IVoucherRepository _voucherRepository) : PageModel
     {
-        
+
         public IActionResult OnGet()
         {
             return Page();
         }
 
         [BindProperty]
-        public Voucher Voucher { get; set; }
+        public BusinessObject.Entities.Voucher Voucher { get; set; }
 
         [BindProperty]
         public string msg { get; set; }
@@ -32,10 +32,10 @@ namespace RazorPages.Pages
             {
                 msg = "Missing information";
             }
-            
+
             Voucher.voucherID = Guid.NewGuid().ToString();
             Voucher.status = true;
-            //Voucher.create_By = null; 
+            //Voucher.create_By = null;
             msg = await _voucherRepository.Add(Voucher);
             return Page();
         }

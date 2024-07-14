@@ -99,6 +99,7 @@ namespace DataAccessObject
                 found.create_At = voucher.create_At;
                 found.update_By = voucher.update_By;
                 found.update_At = voucher.update_At;
+                found.status = voucher.status;
 
                 return db.SaveChanges() > 0 ? "Update success!" : "Update failed!";
 
