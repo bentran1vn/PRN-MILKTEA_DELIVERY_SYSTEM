@@ -65,6 +65,27 @@
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/5.0.11/signalr.min.js"></script>
+<script type="text/javascript">
+    const connection = new signalR.HubConnectionBuilder()
+        .withUrl("/signalrServer")
+        .withAutomaticReconnect() // Automatically attempt to reconnect if the connection is lost
+        .configureLogging(signalR.LogLevel.Information)
+        .withHubProtocol(new signalR.JsonHubProtocol())
+        .build();
+
+    connection.serverTimeoutInMilliseconds = 60000;
+
+    console.log(connection);
+
+    connection.on("NewStatus", function () {
+        location.reload();
+    });
+
+    connection.start().catch(function (err) {
+        return console.error(err.toString());
+    });
+</script>
 </body>
 </html>
 

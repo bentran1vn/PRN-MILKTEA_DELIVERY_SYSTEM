@@ -29,7 +29,7 @@ public class ShipperOrderDetail(
         OrderDetails = orderDetailRepository.GetOrderDetailByOrderId(id!).ToList();
     }
     
-    public IActionResult OnPostHandlerDone()
+    public async Task<IActionResult> OnPostHandlerDone()
     {
         var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
         var role = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
@@ -38,6 +38,7 @@ public class ShipperOrderDetail(
             orderRepository.UpdateOrder(new Guid(OrderId), 2, userId);
             IsTaked = String.Empty;
         }
+        await hubContext.Clients.All.SendAsync("NewStatus");
         return RedirectToPage("./Shipper");
     }
     public string IsTaked
