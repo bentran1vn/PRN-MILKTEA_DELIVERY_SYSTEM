@@ -20,7 +20,7 @@ namespace RazorPages.Pages
         [TempData]
         public string Message { get; set; }
         [TempData]
-        public bool IsSuccess { get; set; } = false;
+        public int IsSuccess { get; set; } = 0;
         [TempData]
         public int Cout { get; set; } = 0;
         public string OrderID { get; set; }
@@ -30,7 +30,7 @@ namespace RazorPages.Pages
         {
             OrderID = id;
         }
-        public void OnPost(string id)
+        public IActionResult OnPost(string id)
         {
             OrderID = id;
             var x = _orderDetailsRepository.GetOrderDetailIDsFromOrderID(id);
@@ -54,11 +54,15 @@ namespace RazorPages.Pages
             catch
             {
                 Message = "You have already feedback this order";
-                return;
+                IsSuccess = 1;
+                return Page();
             }
             Message = "Feedback success";
+
             Cout++;
-            
+            IsSuccess = 2;
+            Task.Delay(2000);
+            return RedirectToPage("OrderFeebback");
 
         }
     }

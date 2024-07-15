@@ -43,7 +43,7 @@ namespace DataAccessObject.Orders
 
         public IEnumerable<Order> GetOrders(string userID)
         {
-            var orders = _context.Orders.Include(o => o.Users).Where(o => o.userID == userID && o.status != 0).ToList();
+            var orders = _context.Orders.Include(o => o.Users).Where(o => o.userID == userID).ToList();
             foreach (var order in orders)
             {
                 try
@@ -63,7 +63,7 @@ namespace DataAccessObject.Orders
         public IEnumerable<Order> GetAllOrders()
         {
 
-            return [.. _context.Orders.Include(o => o.Users).Include(x=>x.Shippers)];
+            return [.. _context.Orders.Include(o => o.Users).Include(x => x.Shippers)];
         }
     }
 }

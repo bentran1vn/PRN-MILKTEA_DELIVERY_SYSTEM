@@ -30,41 +30,44 @@
                 <th class="text-right py-3 px-4" style="width: 100px;">Status</th>
                 <th class="text-right py-3 px-4" style="width: 100px;">FeebBack</th>
 
-            </tr>
-            </thead>
-            <tbody>
-            @foreach (var item in Model.Order)
-            {
-                <tr>
-                    <td class="p-4">
-                        @(item.orderID)
-                    </td>
-                    <td class="text-right font-weight-semibold align-middle p-4">
-                        @item.Shippers?.userName
-                    </td>
-                    <td class="align-middle p-4">@item.total</td>
-                    <td class="text-right font-weight-semibold align-middle p-4">
-                        @if (item.status == 1)
-                        {
-                            <span>Shipping</span>
-                        }
-                        else if (item.status == 2)
-                        {
-                            <span>Finished</span>
-                        }
-                        else
-                        {
-                            <span>Unknown</span>
-                        }
-                    </td>
-                    <td class="text-center align-middle">
-                        <a asp-page="./Feedback"
-                           asp-route-id="@item.orderID"
-                           class="btn btn-primary">Feedback</a>
-                    </td>
-                </tr>
-            }
-            </tbody>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Order)
+                    {
+                        <tr>
+                            <td class="p-4">
+                                @(item.orderID)
+                            </td>
+                            <td class="text-right font-weight-semibold align-middle p-4">
+                                @item.Shippers?.userName
+                            </td>
+                            <td class="align-middle p-4">@item.total</td>
+                            <td class="text-right font-weight-semibold align-middle p-4">
+                                @if (item.status == 1)
+                                {
+                                    <span>Shipping</span>
+                                }
+                                else if (item.status == 2)
+                                {
+                                    <span>Finished</span>
+                                }
+                                else
+                                {
+                                    <span>Pending</span>
+                                }
+                            </td>
+                            @if (item.status == 2)
+                            {
+                                <td class="text-center align-middle">
+                                    <a asp-page="./Feedback"
+                                       asp-route-id="@item.orderID"
+                                       class="btn btn-primary">Feedback</a>
+                                </td>
+                            }
+                        </tr>
+                    }
+          </tbody>
 
 
         </table>
