@@ -99,6 +99,7 @@ public class CheckoutModel(
             //     Create_At = now,
             //     ShipperName = "NguoiBan"
             // });
+            await hubContext.Clients.All.SendAsync("NewOrder");
             httpContextAccessor.HttpContext?.Session?.SetList("Cart", new List<ProductCartModel>());
         }
         return RedirectToPage("./Menu");
