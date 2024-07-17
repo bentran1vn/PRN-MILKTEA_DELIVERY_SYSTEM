@@ -33,11 +33,13 @@
                     <input asp-for="ProductCartInput.ProductId" type="hidden"/>
                     <input asp-for="ProductCartInput.Quantity" class="form-control text-center me-3" id="inputQuantity"
                            type="number" data-max-quantity="@Model.ProductModel.Quantity" />
+                    <span></span>
                     <button class="btn btn-outline-dark flex-shrink-0" type="submit">
                         <i class="bi-cart-fill me-1"></i>
                         Add to cart
                     </button>
                 </div>
+                <span asp-validation-for="ProductCartInput.Quantity" class="text-danger"></span>
             </form>
         </div>
     </div>
@@ -85,7 +87,7 @@
                         <!-- Sale badge-->
                         <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
                         <!-- Product image-->
-                        <img class="card-img-top" src="images/1milte.jpeg" alt="..."/>
+                        <img class="card-img-top" @(item?.Imgs == null ? "images/1milte.png" : item?.Imgs == null) alt="..."/>
                         <!-- Product details-->
                         <div class="card-body p-4">
                             <div class="text-center">

@@ -54,6 +54,16 @@ public class Detaill : PageModel
     
     public IActionResult OnPost()
     {
+        if (!ModelState.IsValid)
+        {
+            var result = _productRepository.GetProductById(ProductCartInput.ProductId);
+            var result4 = _productRepository.GetAll4(ProductCartInput.ProductId).ToList();
+            var resultFeed = _feedBackRepository.GetAllFeedBackByProductId(ProductCartInput.ProductId).ToList();
+            ProductModel = result!;
+            ProductList4 = result4;
+            FeedbackItems = resultFeed;
+            return Page();
+        }
         _httpContextAccessor?.HttpContext?.Session.AddProductToCart(ProductCartInput.ProductId, ProductCartInput.Quantity);
         return RedirectToPage("./Detaill", new { id = ProductCartInput.ProductId });
     }

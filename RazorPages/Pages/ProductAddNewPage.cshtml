@@ -6,10 +6,14 @@
 }
 
 <!DOCTYPE html>
-
 <html>
 <head>
     <title>ProductAddNew</title>
+    <environment include="Development">
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.6.0.min.js"></script>
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.3/jquery.validate.min.js"></script>
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate.unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+    </environment>
 </head>
 <body>
 <div>
@@ -18,34 +22,41 @@
         <div class="form-group">
             <label asp-for="ProductModel.ProductName">Product Name:</label>
             <input type="text" class="form-control" asp-for="ProductModel.ProductName" />
+            <span asp-validation-for="ProductModel.ProductName" class="text-danger"></span>
         </div>
 
         <div class="form-group">
             <label asp-for="ProductModel.ProductDescription">Product Description:</label>
             <textarea class="form-control" asp-for="ProductModel.ProductDescription"></textarea>
+            <span asp-validation-for="ProductModel.ProductDescription" class="text-danger"></span>
         </div>
 
         <div class="form-group">
             <label asp-for="ProductModel.ProductType">Product Type:</label>
             <select class="form-control" asp-for="ProductModel.ProductType">
+                <option value="">Select...</option>
                 <option value="1">Hot</option>
                 <option value="0">Cool</option>
             </select>
+            <span asp-validation-for="ProductModel.ProductType" class="text-danger"></span>
         </div>
 
         <div class="form-group">
             <label asp-for="ProductModel.Price">Price:</label>
             <input type="number" class="form-control" asp-for="ProductModel.Price" step="0.01" />
+            <span asp-validation-for="ProductModel.Price" class="text-danger"></span>
         </div>
 
         <div class="form-group">
             <label asp-for="ProductModel.Quantity">Quantity:</label>
             <input type="number" class="form-control" asp-for="ProductModel.Quantity" />
+            <span asp-validation-for="ProductModel.Quantity" class="text-danger"></span>
         </div>
 
         <div class="form-group">
             <label asp-for="ProductModel.FileUpload">Select Image:</label>
             <input type="file" class="form-control" asp-for="ProductModel.FileUpload" />
+            <span asp-validation-for="ProductModel.FileUpload" class="text-danger"></span>
         </div>
 
         <button type="submit" class="btn btn-primary">Create Product</button>
@@ -53,10 +64,14 @@
 
     @if (Model.Message != null)
     {
-    <div class="alert alert-info mt-4">
-        Create Product Successfully -<a href="@Model.Message" class=""> @Model.Message</a>
-    </div>
+        <div class="alert alert-info mt-4">
+            <a href="@Model.Message" class=""> @Model.Message</a>
+        </div>
     }
 </div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
 </body>
 </html>
