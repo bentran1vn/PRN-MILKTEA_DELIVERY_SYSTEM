@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using BusinessObject.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -17,6 +18,11 @@ public class ProductAddNewPage(IImageUploadService imageUploadService, IProductR
 
     public async Task<IActionResult> OnPostAsync()
     {
+        if (!ModelState.IsValid)
+        {
+            return Page();
+        }
+        
         if (ProductModel.FileUpload != null && ProductModel.FileUpload.Length > 0)
         {
             var guidId = Guid.NewGuid();
@@ -61,7 +67,7 @@ public class ProductAddNewPage(IImageUploadService imageUploadService, IProductR
         }
         else
         {
-            Message = "Please select a file to upload.";
+            Message = "Product Empty, Please select a file to upload.";
             return Page();
         }
     }
@@ -73,11 +79,21 @@ public class ProductAddNewPage(IImageUploadService imageUploadService, IProductR
 
 public class ProductModel
 {
-    public string ProductID { get; set; }
+    // public string ProductID { get; set; }
+    [Required]
     public required string ProductName { get; set; }
+    [Required]
     public required string ProductDescription { get; set; }
+    [Required]
     public required int ProductType { get; set; } // 1 for hot, 0 for cool
+    
+    [Required]
+    [Range(0.01, double.MaxValue, ErrorMessage = "Price must be a positive value.")]
     public required double Price { get; set; }
+    
+    [Required]
+    [Range(1, int.MaxValue, ErrorMessage = "Price must be a positive value.")]
     public required int Quantity { get; set; }
+    [Required]
     public IFormFile FileUpload { get; set; }
 }
