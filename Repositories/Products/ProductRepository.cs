@@ -61,6 +61,11 @@ public class ProductRepository : IProductRepository
     {
         await _dao.Add(product);
     }
+    
+    public void Update(Product product)
+    {
+        _dao.Update(product);
+    }
 
     public void UpdateCategory(Product product)
     {

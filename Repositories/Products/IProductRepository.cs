@@ -14,7 +14,7 @@ public interface IProductRepository
     IEnumerable<Product> GetAll();
     void DeleteProduct(string productId);
     Task AddProduct(Product product);
-    void UpdateCategory(Product product);
+    void Update(Product product);
     Product? GetProductById(string productId);
     IEnumerable<Product> GetAll4(string productId);
     IEnumerable<Product> GetAll6();
