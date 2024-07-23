@@ -13,84 +13,89 @@
     <link href="css/cart.css" rel="stylesheet" />
 </head>
 <body>
-<div class="container px-3 my-5 clearfix">
-    <!-- Shopping cart table -->
-    <div class="card">
-        <div class="card-header">
-            <h2>Order History</h2>
+    <div class="container px-3 my-5 clearfix">
+        <!-- Shopping cart table -->
+        <div class="card">
+            <div class="row">
+                <div class="card-header">
+                    <h2 class="cols-md-6">Order History</h2>
+
+                </div>
+                <div class="card-header" style="margin-left:700px">
+                    <h2 class="cols-md-6"><a asp-page="/ViewAllFeebbacks">View all feedbacks</a></h2>
+                </div>
+            </div>
+            <table class="table table-bordered m-0">
+                <thead>
+                    <tr>
+                        <!-- Set columns width -->
+                        <th class="text-center py-3 px-4" style="min-width: 200px;">Order ID</th>
+                        <th class="text-right py-3 px-4" style="width: 150px;"> Shipper</th>
+                        <th class="text-right py-3 px-4" style="width: 100px;">Total</th>
+                        <th class="text-right py-3 px-4" style="width: 100px;">Status</th>
+                        <th class="text-right py-3 px-4" style="width: 100px;">FeebBack</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Order)
+                    {
+                        <tr>
+                            <td class="p-4">
+                                @(item.orderID)
+                            </td>
+                            <td class="text-right font-weight-semibold align-middle p-4">
+                                @item.Shippers?.userName
+                            </td>
+                            <td class="align-middle p-4">@item.total</td>
+                            <td class="text-right font-weight-semibold align-middle p-4">
+                                @if (item.status == 1)
+                                {
+                                    <span>Shipping</span>
+                                }
+                                else if (item.status == 2)
+                                {
+                                    <span>Finished</span>
+                                }
+                                else
+                                {
+                                    <span>Unknown</span>
+                                }
+                            </td>
+                            <td class="text-center align-middle">
+                                <a asp-page="./Feedback"
+                                   asp-route-id="@item.orderID"
+                                   class="btn btn-primary">Feedback</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+
+
+            </table>
+
         </div>
-
-        <table class="table table-bordered m-0">
-            <thead>
-            <tr>
-                <!-- Set columns width -->
-                <th class="text-center py-3 px-4" style="min-width: 200px;">Order ID</th>
-                <th class="text-right py-3 px-4" style="width: 150px;"> Shipper</th>
-                <th class="text-right py-3 px-4" style="width: 100px;">Total</th>
-                <th class="text-right py-3 px-4" style="width: 100px;">Status</th>
-                <th class="text-right py-3 px-4" style="width: 100px;">FeebBack</th>
-
-            </tr>
-            </thead>
-            <tbody>
-            @foreach (var item in Model.Order)
-            {
-                <tr>
-                    <td class="p-4">
-                        @(item.orderID)
-                    </td>
-                    <td class="text-right font-weight-semibold align-middle p-4">
-                        @item.Shippers?.userName
-                    </td>
-                    <td class="align-middle p-4">@item.total</td>
-                    <td class="text-right font-weight-semibold align-middle p-4">
-                        @if (item.status == 1)
-                        {
-                            <span>Shipping</span>
-                        }
-                        else if (item.status == 2)
-                        {
-                            <span>Finished</span>
-                        }
-                        else
-                        {
-                            <span>Unknown</span>
-                        }
-                    </td>
-                    <td class="text-center align-middle">
-                        <a asp-page="./Feedback"
-                           asp-route-id="@item.orderID"
-                           class="btn btn-primary">Feedback</a>
-                    </td>
-                </tr>
-            }
-            </tbody>
-
-
-        </table>
-
     </div>
-</div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/5.0.11/signalr.min.js"></script>
-<script type="text/javascript">
-    const connection = new signalR.HubConnectionBuilder()
-        .withUrl("/signalrServer")
-        .withAutomaticReconnect() // Automatically attempt to reconnect if the connection is lost
-        .configureLogging(signalR.LogLevel.Information)
-        .withHubProtocol(new signalR.JsonHubProtocol())
-        .build();
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/5.0.11/signalr.min.js"></script>
+    <script type="text/javascript">
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl("/signalrServer")
+            .withAutomaticReconnect() // Automatically attempt to reconnect if the connection is lost
+            .configureLogging(signalR.LogLevel.Information)
+            .withHubProtocol(new signalR.JsonHubProtocol())
+            .build();
 
-    connection.serverTimeoutInMilliseconds = 60000;
+        connection.serverTimeoutInMilliseconds = 60000;
 
-    console.log(connection);
+        console.log(connection);
 
-    connection.on("NewStatus", function () {
-        location.reload();
-    });
+        connection.on("NewStatus", function () {
+            location.reload();
+        });
 
-    connection.start().catch(function (err) {
-        return console.error(err.toString());
-    });
-</script>
+        connection.start().catch(function (err) {
+            return console.error(err.toString());
+        });
+    </script>
 </body>
 </html>
