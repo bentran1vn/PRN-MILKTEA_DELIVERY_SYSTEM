@@ -1,0 +1,30 @@
+﻿@page
+@model RazorPages.Pages.ViewAllFeebbacksModel
+@{
+}
+<h1 class="text-center"> All Feebbacks</h1>
+<table class="table table-bordered m-0">
+    <thead>
+        <tr>
+            <!-- Set columns width -->
+            <th class="text-center " >Order ID</th>          
+            <th class="text-center" >FeebBack</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.FeedBacks)
+        {
+            <tr class="text-center">
+                <td class="">
+                    @(item.feedBackID)
+                </td>               
+                <td class="text-center align-middle">
+                    @(item.content)
+                </td>
+            </tr>
+        }
+    </tbody>
+
+
+</table>
