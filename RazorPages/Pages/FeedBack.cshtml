@@ -20,19 +20,19 @@
             </div>
             <div>
                 <input type="submit" value="Feedback" class="btn btn-primary" />
-                <button asp-page="./OrderFeedBack" style="background:red;color:white" class="btn btn-destructive">Cancel</button>
+                <a asp-page="./OrderFeedBack" style="background:red;color:white" class="btn btn-destructive">Cancel</a>
             </div>
         </form>
     </div>
     @if (!String.IsNullOrEmpty(Model.Message))
     {
-       if(Model.IsSuccess)
+       if(Model.IsSuccess==2)
        {
            <div style="text-align:center; margin-top:25px">
                <h2 style="color:green">@Model.Message</h2>
            </div>
        }
-       else
+       else if (Model.IsSuccess==1)
        {
            <div style="text-align:center; margin-top:25px">
                <h2 style="color:red">@Model.Message</h2>

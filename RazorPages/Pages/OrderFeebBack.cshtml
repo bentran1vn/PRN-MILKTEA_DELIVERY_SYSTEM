@@ -59,17 +59,20 @@
                                 }
                                 else
                                 {
-                                    <span>Unknown</span>
+                                    <span>Pending</span>
                                 }
                             </td>
-                            <td class="text-center align-middle">
-                                <a asp-page="./Feedback"
-                                   asp-route-id="@item.orderID"
-                                   class="btn btn-primary">Feedback</a>
-                            </td>
+                            @if (item.status == 2)
+                            {
+                                <td class="text-center align-middle">
+                                    <a asp-page="./Feedback"
+                                       asp-route-id="@item.orderID"
+                                       class="btn btn-primary">Feedback</a>
+                                </td>
+                            }
                         </tr>
                     }
-                </tbody>
+          </tbody>
 
 
             </table>

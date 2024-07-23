@@ -1,4 +1,5 @@
 ﻿@page
+@using Microsoft.IdentityModel.Tokens
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
@@ -128,7 +129,7 @@
                     <div class="box">
                         <div>
                             <a asp-page="./Detaill" asp-route-id="@item.ProductID" class="img-box">
-                                <img src="images/1milte.jpeg" alt="">
+                                <img src=@(item?.Imgs.IsNullOrEmpty() == true ? "images/1milte.jpeg" : item?.Imgs == null) alt="">
                             </a>
                             <div class="detail-box">
                                 <h5>

@@ -21,7 +21,7 @@
 <section class="py-5">
     <div class="container px-4 px-lg-5 my-5">
         <div class="row gx-4 gx-lg-5 align-items-center">
-            <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" style="height: 600px; width: 500px" src="images/1milte.jpeg" alt="..." /></div>
+            <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" style="height: 600px; width: 500px" src=@Model.ProductModel.Imgs alt="..." /></div>
             <form method="post" class="col-md-6">
                 <h1 class="display-5 fw-bolder">@Model.ProductModel.ProductName</h1>
                 <div class="fs-5 mb-5">
@@ -33,11 +33,13 @@
                     <input asp-for="ProductCartInput.ProductId" type="hidden"/>
                     <input asp-for="ProductCartInput.Quantity" class="form-control text-center me-3" id="inputQuantity"
                            type="number" data-max-quantity="@Model.ProductModel.Quantity" />
+                    <span></span>
                     <button class="btn btn-outline-dark flex-shrink-0" type="submit">
                         <i class="bi-cart-fill me-1"></i>
                         Add to cart
                     </button>
                 </div>
+                <span asp-validation-for="ProductCartInput.Quantity" class="text-danger"></span>
             </form>
         </div>
     </div>
@@ -85,7 +87,7 @@
                         <!-- Sale badge-->
                         <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
                         <!-- Product image-->
-                        <img class="card-img-top" src="images/1milte.jpeg" alt="..."/>
+                        <img class="card-img-top" src=@item?.Imgs alt="..."/>
                         <!-- Product details-->
                         <div class="card-body p-4">
                             <div class="text-center">

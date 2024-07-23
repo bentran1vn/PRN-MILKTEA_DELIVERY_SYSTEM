@@ -57,7 +57,7 @@ namespace BusinessObject
                 entity.HasOne(od => od.Products)
                     .WithMany()
                     .HasForeignKey(od => od.productID)
-                    .OnDelete(DeleteBehavior.Restrict);
+                    .OnDelete(DeleteBehavior.Cascade);
 
                 entity.HasOne(od => od.Orders)
                     .WithMany()
