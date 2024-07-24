@@ -17,7 +17,7 @@ namespace BusinessObject.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.6")
+                .HasAnnotation("ProductVersion", "8.0.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -199,7 +199,7 @@ namespace BusinessObject.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("5cb71893-a17e-4412-943c-a6e0cc45f4be"),
+                            Id = new Guid("ee7439c2-cf3f-40ef-9ed2-7a459994ceef"),
                             note = "Note",
                             orderID = new Guid("11111111-1111-1111-1111-111111111111"),
                             productID = "product1",
@@ -207,7 +207,7 @@ namespace BusinessObject.Migrations
                         },
                         new
                         {
-                            Id = new Guid("d33a159f-370e-421f-b1c3-635e4a91ac83"),
+                            Id = new Guid("660a9358-f71b-46cf-87d5-f25fad43b4ff"),
                             note = "Note",
                             orderID = new Guid("11111111-1111-1111-1111-111111111111"),
                             productID = "product2",
@@ -215,7 +215,7 @@ namespace BusinessObject.Migrations
                         },
                         new
                         {
-                            Id = new Guid("f98b39d1-3583-446a-a77f-433a2cd77c1f"),
+                            Id = new Guid("0803a4f1-f77d-4a89-8eb9-f060c519948b"),
                             note = "Note",
                             orderID = new Guid("11111111-1111-1111-1111-111111111111"),
                             productID = "product3",
@@ -223,7 +223,7 @@ namespace BusinessObject.Migrations
                         },
                         new
                         {
-                            Id = new Guid("ceb555cb-a260-41e5-88cb-0872e6f9a6fb"),
+                            Id = new Guid("43807f11-6260-4b95-b250-de33bef6cf12"),
                             note = "Note",
                             orderID = new Guid("11111111-1111-1111-1111-111111111111"),
                             productID = "product4",
@@ -231,7 +231,7 @@ namespace BusinessObject.Migrations
                         },
                         new
                         {
-                            Id = new Guid("a2b1da07-3148-4962-b681-1aa88a91b365"),
+                            Id = new Guid("dbc974d6-14e2-44cc-9ef5-af0c0d3ab10a"),
                             note = "Note",
                             orderID = new Guid("33333333-3333-3333-3333-333333333333"),
                             productID = "product3",
@@ -239,7 +239,7 @@ namespace BusinessObject.Migrations
                         },
                         new
                         {
-                            Id = new Guid("8a42f8c6-95f6-418c-a444-29efed5dd104"),
+                            Id = new Guid("81a7220c-83c8-4573-a439-638b1045fe87"),
                             note = "Note",
                             orderID = new Guid("33333333-3333-3333-3333-333333333333"),
                             productID = "product4",
@@ -247,7 +247,7 @@ namespace BusinessObject.Migrations
                         },
                         new
                         {
-                            Id = new Guid("a9b0d7ed-b6d0-4eb9-a9af-1367d6358091"),
+                            Id = new Guid("c6e4ea16-3681-4601-9c5e-46e970559fb1"),
                             note = "Note",
                             orderID = new Guid("33333333-3333-3333-3333-333333333333"),
                             productID = "product6",
@@ -255,7 +255,7 @@ namespace BusinessObject.Migrations
                         },
                         new
                         {
-                            Id = new Guid("2dff6eae-b513-4fcf-928b-936fa85a9bc8"),
+                            Id = new Guid("88e99f23-85ef-4a26-b693-6863d9e6dafa"),
                             note = "Note",
                             orderID = new Guid("22222222-2222-2222-2222-222222222222"),
                             productID = "product5",
@@ -263,7 +263,7 @@ namespace BusinessObject.Migrations
                         },
                         new
                         {
-                            Id = new Guid("e868604b-0ab8-4f55-8935-0c758e6df01d"),
+                            Id = new Guid("bda8bc1d-2505-42dc-b1fc-dc2e8eadd64f"),
                             note = "Note",
                             orderID = new Guid("22222222-2222-2222-2222-222222222222"),
                             productID = "product6",
@@ -271,7 +271,7 @@ namespace BusinessObject.Migrations
                         },
                         new
                         {
-                            Id = new Guid("3b139f44-2e94-4792-898c-024c4f476ccb"),
+                            Id = new Guid("c4a61e7f-72b2-4bbb-8c1b-3904794b1699"),
                             note = "Note",
                             orderID = new Guid("22222222-2222-2222-2222-222222222222"),
                             productID = "product7",
@@ -279,7 +279,7 @@ namespace BusinessObject.Migrations
                         },
                         new
                         {
-                            Id = new Guid("5effbc1b-ba0a-4e34-87e2-372511a5ced8"),
+                            Id = new Guid("607e2526-f804-4880-bffc-456a3c2f12e3"),
                             note = "Note",
                             orderID = new Guid("22222222-2222-2222-2222-222222222222"),
                             productID = "product8",
@@ -1015,7 +1015,7 @@ namespace BusinessObject.Migrations
                     b.HasOne("BusinessObject.Entities.Product", "Products")
                         .WithMany()
                         .HasForeignKey("productID")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Orders");
