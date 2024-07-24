@@ -2,6 +2,7 @@ using BusinessObject;
 using BusinessObject.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using Z.EntityFramework.Extensions;
 
 namespace DataAccessObject.Products;
@@ -85,6 +86,9 @@ public class ProductDAO
 
 public class ProductCartModel
 {
-    public string ProductId { get; set; } = null!;
+    [Required]
+    public string ProductId { get; set; }
+    
+    [Range(1, double.MaxValue, ErrorMessage = "Price must be a positive value.")]
     public int Quantity { get; set; } = 1;
 }

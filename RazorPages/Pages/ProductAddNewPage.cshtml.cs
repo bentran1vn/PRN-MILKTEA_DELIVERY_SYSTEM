@@ -67,7 +67,7 @@ public class ProductAddNewPage(IImageUploadService imageUploadService, IProductR
         }
         else
         {
-            Message = "Product Empty, Please select a file to upload.";
+            Message = "Product Image Empty, Please select a file to upload.";
             return Page();
         }
     }
@@ -94,6 +94,6 @@ public class ProductModel
     [Required]
     [Range(1, int.MaxValue, ErrorMessage = "Price must be a positive value.")]
     public required int Quantity { get; set; }
-    [Required]
-    public IFormFile FileUpload { get; set; }
+    
+    public IFormFile? FileUpload { get; set; }
 }
